@@ -11,6 +11,7 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
+// --- Advanced Optimized Metadata ---
 export const metadata = {
   title: {
     default: 'Prodip Hore | MERN Stack Developer & ML Enthusiast',
@@ -37,6 +38,7 @@ export const metadata = {
   creator: 'Prodip Hore',
   publisher: 'Prodip Hore',
 
+  // লিঙ্ক শেয়ার করলে যা দেখাবে (Open Graph)
   openGraph: {
     type: 'website',
     locale: 'en_US',
@@ -46,6 +48,13 @@ export const metadata = {
       'Building scalable web solutions and exploring intelligent systems. Check out my latest MERN and ML projects.',
     siteName: 'Prodip Hore Portfolio',
     images: [
+      {
+        // তোমার প্রোফাইল পিকচারটি মেইন ইমেজ হিসেবে সেট করা হলো
+        url: 'https://i.ibb.co.com/RkfqzktR/190808987.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Prodip Hore Profile Picture',
+      },
       {
         url: 'https://i.ibb.co.com/gMRFWqxZ/2026-03-21-160000-hyprshot.png',
         width: 1200,
@@ -79,13 +88,14 @@ export const metadata = {
     ],
   },
 
+  // টুইটার বা এক্স প্রিভিউ
   twitter: {
     card: 'summary_large_image',
     title: 'Prodip Hore | Full Stack Developer',
     description:
       'Exploring the intersection of Web Development and Machine Learning.',
     creator: '@prodiphore',
-    images: ['https://i.ibb.co.com/gMRFWqxZ/2026-03-21-160000-hyprshot.png'],
+    images: ['https://i.ibb.co.com/RkfqzktR/190808987.jpg'], // মেইন প্রোফাইল পিক
   },
 
   robots: {
