@@ -37,7 +37,7 @@ const experiencesData = [
 const Experience = () => {
   return (
     <section className="bg-card/90 backdrop-blur-md p-8 rounded-3xl border border-gray-800 shadow-2xl mt-8 transition-all duration-300">
-      {/* হেডার */}
+   
       <div className="flex justify-between items-start mb-8">
         <div>
           <span className="text-primary text-[10px] font-bold uppercase tracking-[0.2em]">
@@ -55,7 +55,7 @@ const Experience = () => {
         </button>
       </div>
 
-      {/* এক্সপেরিয়েন্স লিস্ট */}
+    
       <div className="space-y-6">
         {experiencesData.map((exp, index) => (
           <div
@@ -81,7 +81,7 @@ const Experience = () => {
               </span>
             </div>
 
-            {/* ডেসক্রিপশন লিস্ট */}
+           
             <ul className="mt-4 space-y-2">
               {exp.description.map((point, i) => (
                 <li

@@ -48,7 +48,6 @@ const Projects = () => {
             key={index}
             className="bg-background/40 border border-gray-800/60 p-6 rounded-2xl hover:border-primary/40 transition-all group relative"
           >
-            {/* প্রজেক্ট টাইটেল যা থিম কালার অনুযায়ী পরিবর্তন হবে */}
             <div className="mb-4">
               <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
                 {project.title}
@@ -58,7 +57,7 @@ const Projects = () => {
               </p>
             </div>
 
-            {/* ডেট সেকশন - বর্ডারে থিমের হালকা প্রভাব */}
+            
             <div className="flex items-center gap-2 text-gray-400 mb-4 bg-background/60 w-fit px-3 py-1 rounded-lg border border-gray-800 group-hover:border-primary/20 transition-colors">
               <FiCalendar className="text-xs text-primary/70" />
               <span className="text-[11px] font-mono">{project.date}</span>
@@ -68,7 +67,7 @@ const Projects = () => {
               {project.description}
             </p>
 
-            {/* ল্যাঙ্গুয়েজ ট্যাগস */}
+            
             <div className="flex flex-wrap gap-2 mb-8">
               {project.tags.map((tag) => (
                 <span
@@ -80,7 +79,7 @@ const Projects = () => {
               ))}
             </div>
 
-            {/* অ্যাকশন বাটনস - থিম কালার হোভার সহ */}
+           
             <div className="flex items-center gap-4">
               <a
                 href={project.links.details}

@@ -8,7 +8,7 @@ import { usePathname } from 'next/navigation';
 const Navbar = () => {
   const [isThemeOpen, setIsThemeOpen] = useState(false);
   const [isColorPickerOpen, setIsColorPickerOpen] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // মোবাইলের জন্য নতুন স্টেট
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [theme, setTheme] = useState('dark');
   const [hue, setHue] = useState(340);
   const pathname = usePathname();
@@ -16,7 +16,6 @@ const Navbar = () => {
   const dropdownRef = useRef(null);
   const pickerRef = useRef(null);
 
-  // ডাইনামিক রুট লিস্ট (এখানে চেঞ্জ করলে সব জায়গায় চেঞ্জ হবে)
   const navLinks = [
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
@@ -70,9 +69,7 @@ const Navbar = () => {
   return (
     <nav className="absolute top-0 left-0 w-full z-50 px-4">
       <div className="max-w-5xl mx-auto bg-card backdrop-blur-xl border border-primary-border/30 px-6 py-3 rounded-b-2xl flex items-center justify-between shadow-2xl transition-all duration-300">
-        {/* Left Side: Logo & Mobile Toggle */}
         <div className="flex items-center gap-4">
-          {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="md:hidden text-foreground/70 hover:text-primary transition-colors"
@@ -80,7 +77,6 @@ const Navbar = () => {
             {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
 
-          {/* Logo Section */}
           <Link
             href="/"
             className="flex items-center gap-2 font-bold cursor-pointer group"
@@ -98,7 +94,6 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* Center: Desktop Menu Links (Laptop view unchanged) */}
         <div className="hidden md:flex items-center gap-8 text-[14px] font-medium">
           {navLinks.map((link) => {
             const isActive = pathname === link.path;
@@ -114,9 +109,8 @@ const Navbar = () => {
           })}
         </div>
 
-        {/* Right Side: Action Buttons */}
+      
         <div className="flex items-center gap-2 md:gap-4 text-foreground/70 relative">
-          {/* Color Picker Container */}
           <div ref={pickerRef} className="relative flex items-center">
             <button
               onClick={() => setIsColorPickerOpen(!isColorPickerOpen)}
@@ -212,7 +206,6 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu Dropdown (Phones only) */}
       {isMobileMenuOpen && (
         <div className="md:hidden mt-2 mx-auto max-w-sm bg-card/90 backdrop-blur-2xl border border-primary-border/30 rounded-2xl p-2 shadow-2xl animate-in slide-in-from-top-4 duration-300 z-40">
           <div className="flex flex-col gap-1">

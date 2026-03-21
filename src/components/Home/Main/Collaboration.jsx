@@ -3,7 +3,6 @@ import React from 'react';
 const Collaboration = () => {
   return (
     <div className="mt-8 space-y-8">
-      {/* Collaboration Card */}
       <section className="bg-card/90 backdrop-blur-md p-8 rounded-3xl border border-gray-800 shadow-2xl flex flex-col md:flex-row justify-between items-center gap-6 transition-all duration-300">
         <div>
           <span className="text-primary text-[10px] font-bold uppercase tracking-[0.2em]">

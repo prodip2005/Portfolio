@@ -12,7 +12,6 @@ const Footer = () => {
     <footer className="w-full mt-20 pb-10 relative">
       <div className="max-w-5xl mx-auto px-4 border-t border-black/5 dark:border-white/5 pt-10 text-center">
         <div className="flex flex-col items-center gap-3">
-          {/* Copyright Section */}
           <div className="text-[13px] text-gray-500 font-medium">
             <p>© 2026 Prodip Hore. All Rights Reserved.</p>
           </div>

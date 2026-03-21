@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 
 const Visitors = () => {
   const [mounted, setMounted] = useState(false);
-  const githubUsername = 'prodip2005'; // আপনার ইউজারনেম দিন
+  const githubUsername = 'prodip2005'; 
 
   useEffect(() => {
     setMounted(true);
@@ -14,13 +14,11 @@ const Visitors = () => {
 
   return (
     <div className="bg-card/90 backdrop-blur-md p-6 rounded-3xl border border-gray-800 transition-all duration-300 shadow-xl overflow-hidden group hover:border-primary/30">
-      {/* টাইটেল অংশ - থিম কালার অনুযায়ী (primary) */}
       <h4 className="text-foreground font-bold mb-5 flex items-center gap-2">
         <span className="w-1 h-4 bg-primary rounded-full"></span>
         <span className="tracking-wide text-sm">Visitors</span>
       </h4>
 
-      {/* ইমেজ কন্টেইনার - ব্যাকগ্রাউন্ড এবং বর্ডার গ্লোবাল থিম থেকে */}
       <div className="flex justify-center items-center h-28 bg-background/50 rounded-2xl border border-gray-800/60 overflow-hidden relative group-hover:border-primary/20 transition-all">
         {mounted ? (
           <div className="flex justify-center items-center">
@@ -29,7 +27,7 @@ const Visitors = () => {
               alt="Dynamic Visitor Counter"
               fill 
               className="object-contain transition-all duration-500 scale-[0.9] md:scale-[1] filter drop-shadow-[0_0_10px_rgba(var(--primary-rgb),0.3)]"
-              unoptimized={true} // ডাইনামিক কাউন্টারের জন্য এটি জরুরি
+              unoptimized={true}
             />
           </div>
         ) : (

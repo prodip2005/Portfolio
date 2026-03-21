@@ -5,9 +5,7 @@ import Link from 'next/link';
 const AboutPage = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 relative z-10 -mt-20 lg:-mt-24">
-      {/* Main Card container */}
       <div className="bg-card/90 backdrop-blur-md border border-gray-800 rounded-3xl p-8 md:p-12 mb-8 shadow-2xl w-full transition-colors duration-300">
-        {/* Intro Section */}
         <div className="mb-10">
           <span className="text-primary text-xs font-bold uppercase tracking-widest">
             About Me
@@ -30,7 +28,6 @@ const AboutPage = () => {
           </div>
         </div>
 
-        {/* Education Section */}
         <div className="mb-10">
           <div className="mb-6 flex items-center gap-3">
             <span
@@ -60,7 +57,6 @@ const AboutPage = () => {
           </ul>
         </div>
 
-        {/* Skills Section */}
         <div className="mb-10">
           <div className="mb-6 flex items-center gap-3">
             <span
@@ -85,7 +81,6 @@ const AboutPage = () => {
           </div>
         </div>
 
-        {/* Experience Section */}
         <div className="mb-10">
           <div className="mb-6 flex items-center gap-3">
             <span
@@ -132,7 +127,7 @@ const AboutPage = () => {
           </div>
         </div>
 
-        {/* Goals Section */}
+        
         <div className="mb-10">
           <div className="mb-6 flex items-center gap-3">
             <span
@@ -161,7 +156,6 @@ const AboutPage = () => {
           </div>
         </div>
 
-        {/* Collaborate Section */}
         <div className="mt-10">
           <div className="mb-6 flex items-center gap-3">
             <span
@@ -183,7 +177,6 @@ const AboutPage = () => {
               Let&apos;s build something amazing together!
             </p>
 
-            {/* Social Links for Collaboration */}
             <div className="flex flex-wrap items-center gap-4 pt-4">
               <Link
                 href="https://github.com/shadowomonarch"

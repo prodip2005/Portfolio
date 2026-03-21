@@ -36,13 +36,11 @@ const SideContact = () => {
 
   return (
     <div className="bg-card/90 backdrop-blur-md p-6 rounded-3xl border border-gray-800 mt-6 transition-all duration-300 shadow-xl">
-      {/* হেডার */}
       <h4 className="text-primary font-bold mb-6 flex items-center gap-2">
         <span className="w-1.5 h-5 bg-primary rounded-full"></span>
         <span className="tracking-wide">Contact</span>
       </h4>
 
-      {/* Email Section - ক্লিকেবল করা হয়েছে */}
       <a
         href="mailto:contact@rei.my.id"
         className="mb-8 p-4 bg-background/50 rounded-2xl border border-gray-700/50 flex items-center gap-4 hover:border-primary/50 transition-all group"
@@ -60,7 +58,6 @@ const SideContact = () => {
         </div>
       </a>
 
-      {/* Social Links List */}
       <div className="space-y-5">
         <p className="text-[11px] text-gray-500 uppercase font-bold tracking-widest ml-1">
           Social Connect
@@ -74,7 +71,6 @@ const SideContact = () => {
               className="flex items-center justify-between p-3 rounded-2xl hover:bg-white/5 border border-transparent hover:border-gray-700/50 transition-all group"
             >
               <div className="flex items-center gap-4">
-                {/* সোশ্যাল আইকন বক্স */}
                 <div
                   className={`w-10 h-10 flex items-center justify-center rounded-xl ${social.bgColor} transition-transform group-hover:scale-110`}
                 >
