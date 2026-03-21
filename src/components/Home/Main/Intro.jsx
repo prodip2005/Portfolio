@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 
 const Intro = () => {
@@ -31,15 +32,22 @@ const Intro = () => {
       </div>
 
       <div className="flex flex-wrap items-center gap-6 mt-10">
-        <button className="bg-primary text-white px-6 py-2.5 rounded-xl font-medium hover:opacity-90 transition shadow-lg">
-          View Projects
-        </button>
-        <button className="text-gray-400 font-medium hover:text-primary transition">
-          About Me
-        </button>
-        <button className="text-gray-400 font-medium hover:text-primary transition">
-          Get in Touch
-        </button>
+        <Link href={'/projects'}>
+          <button className="bg-primary text-white px-6 py-2.5 rounded-xl font-medium hover:opacity-90 transition shadow-lg">
+            View Projects
+          </button>
+        </Link>
+
+        <Link href={'/about'}>
+          <button className="text-gray-400 font-medium hover:text-primary transition">
+            About Me
+          </button>
+        </Link>
+        <Link href={'/contact'}>
+          <button className="text-gray-400 font-medium hover:text-primary transition">
+            Get in Touch
+          </button>
+        </Link>
       </div>
     </section>
   );
