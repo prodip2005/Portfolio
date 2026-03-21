@@ -4,28 +4,29 @@ const Intro = () => {
   return (
     <section className="bg-card/90 backdrop-blur-md p-8 rounded-3xl border border-gray-800 shadow-2xl transition-colors duration-300">
       <span className="text-primary text-xs font-bold uppercase tracking-widest">
-        CTF Player & Network Security Engineer
+        MERN Stack Developer & Competitive Programmer
       </span>
 
-     
       <h1 className="text-4xl font-bold text-foreground mt-4">
         Hi, I'm Prodip Hore.
       </h1>
 
       <p className="text-gray-400 mt-6 leading-relaxed">
-        A passionate CTF Player & Network Security Engineer specializing in
-        cryptography, binary exploitation, and reverse engineering.
+        A passionate MERN Stack Developer and Competitive Programmer. Currently
+        studying Computer Science and Engineering (CSE) at Patuakhali Science
+        and Technology University. My ultimate goal is to dive deep into Machine
+        Learning while building robust web applications.
       </p>
 
       <div className="flex flex-wrap gap-3 mt-6">
         <span className="px-3 py-1 bg-background text-gray-400 text-xs rounded-lg border border-gray-700">
-          Palembang, Indonesia
+          Patuakhali, Bangladesh
         </span>
         <span className="px-3 py-1 bg-background text-gray-400 text-xs rounded-lg border border-gray-700">
-          CTF & Network Engineering
+          Web Dev & CP
         </span>
         <span className="px-3 py-1 bg-background text-gray-400 text-xs rounded-lg border border-gray-700">
-          GNU/Linux Enthusiast
+          ML Enthusiast
         </span>
       </div>
 

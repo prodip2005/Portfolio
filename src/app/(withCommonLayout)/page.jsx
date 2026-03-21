@@ -1,8 +1,10 @@
 import Achievement from '@/components/Home/Main/Achievement';
 import Collaboration from '@/components/Home/Main/Collaboration';
+import Education from '@/components/Home/Main/Education';
 import Experience from '@/components/Home/Main/Experience';
 import Intro from '@/components/Home/Main/Intro';
 import Projects from '@/components/Home/Main/Projects';
+import Skills from '@/components/Home/Main/Skills';
 import SideContact from '@/components/Home/SideContact';
 import SideProfile from '@/components/Home/SideProfile';
 import Visitors from '@/components/Home/Visitors';
@@ -22,6 +24,8 @@ const HomePage = () => {
 
         <main className="w-full lg:flex-1 space-y-8 relative z-10 -mt-10 lg:-mt-24">
           <Intro />
+          <Skills />
+          <Education/>
           <Achievement />
           <Projects />
           <Experience />

@@ -22,8 +22,8 @@ const SideProfile = () => {
       <div className="p-6 text-center">
         <h3 className="text-xl font-bold text-foreground">Prodip Hore</h3>
         <p className="text-gray-400 text-sm mt-3 leading-relaxed">
-          A passionate CTF Player & Network Security Engineer specializing in
-          cryptography, binary exploitation, and reverse engineering.
+          MERN Stack Developer & Competitive Programmer based in Bangladesh. CSE
+          Undergrad at PSTU with a growing passion for Machine Learning.
         </p>
 
         <div className="flex justify-center gap-4 mt-6">

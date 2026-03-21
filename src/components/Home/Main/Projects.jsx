@@ -1,23 +1,24 @@
+import Link from 'next/link';
 import React from 'react';
 import { FiExternalLink, FiCalendar } from 'react-icons/fi';
 
 const projectsData = [
   {
-    title: 'Aizawa (Client)',
-    role: 'Creator & Maintainer',
-    date: '2022-12-05',
+    title: 'E-Commerce Platform',
+    role: 'Full Stack Developer',
+    date: '2023-08-15',
     description:
-      'Command-line webshell client that executes payloads through HTTP headers to help attackers bypass WAF/IDS.',
-    tags: ['PYTHON', 'CLI'],
+      'A full-fledged e-commerce platform built with MERN stack featuring user authentication, payment gateway integration, and admin dashboard.',
+    tags: ['REACT', 'NODE.JS', 'MONGODB'],
     links: { details: '#', source: '#' },
   },
   {
-    title: 'Aizawa Webshell',
-    role: 'Creator & Maintainer',
-    date: '2022-12-05',
+    title: 'Algorithmic Problem Solver',
+    role: 'Creator',
+    date: '2024-01-10',
     description:
-      'Lightweight PHP webshells built to stay compatible with the Aizawa client for red-team and educational purposes.',
-    tags: ['PHP', 'HTTP'],
+      'A repository of optimized solutions for 500+ competitive programming problems from Codeforce and LeetCode written in C++.',
+    tags: ['C++', 'ALGORITHMS', 'CP'],
     links: { details: '#', source: '#' },
   },
 ];
@@ -37,9 +38,12 @@ const Projects = () => {
             A selection of open-source projects I build and maintain.
           </p>
         </div>
-        <button className="text-gray-400 hover:text-primary text-xs font-semibold transition-colors">
-          View all projects
-        </button>
+        <Link href={'/projects'}>
+          {' '}
+          <button className="text-gray-400 hover:text-primary text-xs font-semibold transition-colors">
+            View all projects
+          </button>
+        </Link>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
@@ -57,7 +61,6 @@ const Projects = () => {
               </p>
             </div>
 
-            
             <div className="flex items-center gap-2 text-gray-400 mb-4 bg-background/60 w-fit px-3 py-1 rounded-lg border border-gray-800 group-hover:border-primary/20 transition-colors">
               <FiCalendar className="text-xs text-primary/70" />
               <span className="text-[11px] font-mono">{project.date}</span>
@@ -67,7 +70,6 @@ const Projects = () => {
               {project.description}
             </p>
 
-            
             <div className="flex flex-wrap gap-2 mb-8">
               {project.tags.map((tag) => (
                 <span
@@ -79,7 +81,6 @@ const Projects = () => {
               ))}
             </div>
 
-           
             <div className="flex items-center gap-4">
               <a
                 href={project.links.details}

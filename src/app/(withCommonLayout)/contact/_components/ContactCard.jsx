@@ -27,13 +27,15 @@ const ContactItem = ({ iconName, label, value, subValue, href, isPrimary }) => {
       rel="noopener noreferrer"
       className={`group flex items-center gap-5 p-5 rounded-2xl transition-all duration-300 border ${
         isPrimary
-          ? 'bg-primary/10 border-primary/30 shadow-[0_0_15px_var(--primary-shade)] hover:bg-primary/15 hover:scale-[1.02]'
+          ? 'bg-primary/10 border-primary/30 hover:bg-primary/15 hover:scale-[1.02]'
           : 'bg-background hover:bg-card/80 border-gray-800 hover:border-primary/40 hover:scale-[1.02] shadow-sm'
       }`}
     >
       <div
         className={`p-3 rounded-xl transition-all duration-300 group-hover:scale-110 ${
-          isPrimary ? 'bg-primary text-white shadow-lg' : 'bg-gray-800/80 text-gray-300 group-hover:bg-primary/20 group-hover:text-primary'
+          isPrimary
+            ? 'bg-primary text-white shadow-lg'
+            : 'bg-gray-800/80 text-gray-300 group-hover:bg-primary/20 group-hover:text-primary'
         }`}
       >
         <Icon size={24} strokeWidth={2.5} />
@@ -51,7 +53,9 @@ const ContactItem = ({ iconName, label, value, subValue, href, isPrimary }) => {
             />
           )}
         </h4>
-        {subValue && <p className="text-xs text-foreground/60 mt-0.5">{subValue}</p>}
+        {subValue && (
+          <p className="text-xs text-foreground/60 mt-0.5">{subValue}</p>
+        )}
       </div>
     </a>
   );

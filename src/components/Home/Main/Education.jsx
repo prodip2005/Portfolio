@@ -2,8 +2,8 @@ import React from 'react';
 
 const educationData = [
   {
-    degree: 'Bachelor of Computer Science',
-    status: 'Ongoing', 
+    degree: 'B.Sc. in Computer Science & Engineering (CSE)',
+    status: 'Ongoing',
     institution: 'Patuakhali Science and Technology University (PSTU)',
     period: '2024 - Present',
     major: 'Computer Science',
@@ -12,7 +12,7 @@ const educationData = [
     degree: 'Higher Secondary Certificate (HSC)',
     status: 'Graduated',
     institution: 'Kalaroa Govt College',
-    period: '2021 - 2023', 
+    period: '2021 - 2023',
     major: 'Science',
   },
 ];
@@ -20,7 +20,6 @@ const educationData = [
 const Education = () => {
   return (
     <section className="bg-card/90 backdrop-blur-md p-8 rounded-3xl border border-gray-800 shadow-2xl mt-8 transition-all duration-300">
-     
       <div className="mb-8">
         <span className="text-primary text-[10px] font-bold uppercase tracking-[0.2em]">
           Education

@@ -16,14 +16,15 @@ const AboutPage = () => {
           <div className="space-y-4 text-gray-400 leading-relaxed text-base">
             <p>
               Hey there! I am{' '}
-              <span className="font-bold text-foreground">Prodip Hore</span>{' '}
-              from the vibrant land of Bangladesh.
+              <span className="font-bold text-foreground">Prodip Hore</span>.
             </p>
             <p>
-              I am a passionate tech enthusiast with a strong background in web
-              development and design. I love exploring new technologies,
-              contributing to open-source projects, and creating engaging
-              content.
+              I am a passionate MERN Stack Developer and a Competitive
+              Programmer. Currently, I am pursuing my B.Sc. in Computer Science
+              and Engineering (CSE) at Patuakhali Science and Technology
+              University (PSTU). My main target is to dive deep into Machine
+              Learning while maintaining a strong grip on Web Development and
+              CP.
             </p>
           </div>
         </div>
@@ -39,19 +40,11 @@ const AboutPage = () => {
           <ul className="space-y-6 text-gray-400">
             <li className="flex flex-col">
               <span className="text-lg font-bold text-foreground">
-                B.Sc. in Computer Science
+                B.Sc. in Computer Science and Engineering (CSE)
               </span>
               <span className="text-sm mt-1">
                 Patuakhali Science and Technology University (PSTU) • 2024 -
                 Present
-              </span>
-            </li>
-            <li className="flex flex-col">
-              <span className="text-lg font-bold text-foreground">
-                Computer & Network Engineering
-              </span>
-              <span className="text-sm mt-1">
-                High School Diploma • 2019 - 2022
               </span>
             </li>
           </ul>
@@ -70,13 +63,29 @@ const AboutPage = () => {
               <h4 className="font-bold text-foreground mb-2 text-lg">
                 Languages
               </h4>
+              <p className="text-sm">C, C++, JAVA, JavaScript, PHP</p>
+            </div>
+            <div>
+              <h4 className="font-bold text-foreground mb-2 text-lg">
+                Web Technologies
+              </h4>
               <p className="text-sm">
-                JavaScript, TypeScript, React, Next.js, Python, C++
+                HTML, CSS, React.js, NEXT.js, VUE, Tailwind, daisyUI, ShadeCN UI
               </p>
             </div>
             <div>
-              <h4 className="font-bold text-foreground mb-2 text-lg">Tools</h4>
-              <p className="text-sm">Git, Docker, VS Code, Figma, Postman</p>
+              <h4 className="font-bold text-foreground mb-2 text-lg">
+                Database
+              </h4>
+              <p className="text-sm">MongoDB, PostgreSQL, Prisma, Supabase</p>
+            </div>
+            <div>
+              <h4 className="font-bold text-foreground mb-2 text-lg">
+                Focus Areas
+              </h4>
+              <p className="text-sm">
+                Machine Learning, Competitive Programming, Web Development
+              </p>
             </div>
           </div>
         </div>
@@ -127,7 +136,6 @@ const AboutPage = () => {
           </div>
         </div>
 
-        
         <div className="mb-10">
           <div className="mb-6 flex items-center gap-3">
             <span

@@ -2,34 +2,24 @@ import React from 'react';
 
 const experiencesData = [
   {
-    title: 'Network Security Engineer',
+    title: 'MERN Stack Developer',
+    type: 'Freelance',
+    company: 'Upwork / Fiverr',
+    period: '2023 - Present',
+    description: [
+      'Developed and maintained highly scalable full-stack web applications.',
+      'Designed efficient database schemas using MongoDB and PostgreSQL.',
+      'Collaborated with clients to deliver polished UI with React and TailwindCSS.',
+    ],
+  },
+  {
+    title: 'Frontend Developer',
     type: 'Internship',
-    company: 'Universitas Indo Global Mandiri',
-    period: '2025 - Present',
+    company: 'Tech Startup',
+    period: '2022 - 2023',
     description: [
-      'Assisted in securing campus networks and implementing monitoring solutions.',
-      "Identified and mitigated vulnerabilities in the university's web applications.",
-      'Successfully stopped a DDoS attack targeting public-facing services.',
-    ],
-  },
-  {
-    title: 'Automation Developer',
-    type: 'Freelance',
-    company: 'Self-Employed',
-    period: '2022 - 2024',
-    description: [
-      'Developed custom automation bots for various client needs.',
-      'Built web automation tools for registration and data extraction tasks.',
-    ],
-  },
-  {
-    title: 'Front-end Developer & Whitelist Staff',
-    type: 'Freelance',
-    company: 'PT Datenshi Games Indonesia',
-    period: '2021 - 2022',
-    description: [
-      'Filtering players to identify and flag cheaters.',
-      'Contributed to the creation of the whitelist website.',
+      'Built responsive interfaces using HTML, CSS, and Vue.js.',
+      'Optimized application performance and implemented modern web standards.',
     ],
   },
 ];
@@ -37,7 +27,6 @@ const experiencesData = [
 const Experience = () => {
   return (
     <section className="bg-card/90 backdrop-blur-md p-8 rounded-3xl border border-gray-800 shadow-2xl mt-8 transition-all duration-300">
-   
       <div className="flex justify-between items-start mb-8">
         <div>
           <span className="text-primary text-[10px] font-bold uppercase tracking-[0.2em]">
@@ -55,7 +44,6 @@ const Experience = () => {
         </button>
       </div>
 
-    
       <div className="space-y-6">
         {experiencesData.map((exp, index) => (
           <div
@@ -81,7 +69,6 @@ const Experience = () => {
               </span>
             </div>
 
-           
             <ul className="mt-4 space-y-2">
               {exp.description.map((point, i) => (
                 <li

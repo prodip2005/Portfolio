@@ -1,7 +1,16 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Home, Moon, Palette, Sun, Monitor, Menu, X } from 'lucide-react';
+import {
+  Home,
+  Moon,
+  Palette,
+  Sun,
+  Monitor,
+  Menu,
+  X,
+  RotateCcw,
+} from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -10,7 +19,7 @@ const Navbar = () => {
   const [isColorPickerOpen, setIsColorPickerOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [theme, setTheme] = useState('dark');
-  const [hue, setHue] = useState(340);
+  const [hue, setHue] = useState(240);
   const pathname = usePathname();
 
   const dropdownRef = useRef(null);
@@ -20,11 +29,12 @@ const Navbar = () => {
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
     { name: 'Contact', path: '/contact' },
+    { name: 'Projects', path: '/projects' },
   ];
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme') || 'dark';
-    const savedHue = localStorage.getItem('primary-hue') || 340;
+    const savedHue = localStorage.getItem('primary-hue') || 240;
     setTheme(savedTheme);
     setHue(savedHue);
     applyTheme(savedTheme);
@@ -67,8 +77,8 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="absolute top-0 left-0 w-full z-50 px-4">
-      <div className="max-w-5xl mx-auto bg-card backdrop-blur-xl border border-primary-border/30 px-6 py-3 rounded-b-2xl flex items-center justify-between shadow-2xl transition-all duration-300">
+    <nav className="fixed top-0 left-0 w-full z-50 px-4">
+      <div className="max-w-305 mx-auto bg-card backdrop-blur-xl border border-primary-border/30 px-6 py-3 rounded-b-2xl flex items-center justify-between shadow-2xl transition-all duration-300">
         <div className="flex items-center gap-4">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -101,7 +111,7 @@ const Navbar = () => {
               <Link
                 key={link.path}
                 href={link.path}
-                className={`transition-all ${isActive ? 'text-primary font-bold drop-shadow-[0_0_8px_var(--primary-shade)] scale-105' : 'text-foreground/80 hover:text-primary'}`}
+                className={`transition-all ${isActive ? 'text-primary font-bold scale-105' : 'text-foreground/80 hover:text-primary'}`}
               >
                 {link.name}
               </Link>
@@ -109,71 +119,72 @@ const Navbar = () => {
           })}
         </div>
 
-      
-        <div className="flex items-center gap-2 md:gap-4 text-foreground/70 relative">
-          <div ref={pickerRef} className="relative flex items-center">
-            <button
-              onClick={() => setIsColorPickerOpen(!isColorPickerOpen)}
-              className="hover:text-primary transition-colors p-2"
-            >
+        <div className="flex items-center gap-2 md:gap-4 text-foreground/70 relative h-full">
+          {/* Color Picker Switcher */}
+          <div
+            ref={pickerRef}
+            className="relative flex items-center h-full"
+            onMouseEnter={() => setIsColorPickerOpen(true)}
+            onMouseLeave={() => setIsColorPickerOpen(false)}
+          >
+            <button className="hover:text-primary transition-colors p-2 cursor-default">
               <Palette size={19} />
             </button>
             {isColorPickerOpen && (
-              <div className="absolute right-0 top-14 w-72 bg-card backdrop-blur-2xl border border-primary-border rounded-2xl p-5 shadow-2xl z-50 animate-in fade-in zoom-in duration-200">
-                <div className="flex items-center justify-between mb-4">
-                  <p className="text-xs font-bold uppercase tracking-widest text-foreground/70">
-                    Theme Color
-                  </p>
-                  <div
-                    className="w-4 h-4 rounded-full shadow-sm border border-foreground/10"
-                    style={{ backgroundColor: `hsl(${hue}, 100%, 65%)` }}
+              <div className="absolute right-0 top-10 pt-4 w-72 z-50">
+                <div className="bg-card backdrop-blur-2xl border border-primary-border rounded-xl p-4 shadow-2xl animate-in fade-in zoom-in duration-200">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2 relative">
+                      <span className="w-1.5 h-4 bg-primary rounded-full absolute -left-2"></span>
+                      <p className="text-sm font-bold text-foreground">
+                        Theme Color
+                      </p>
+                      <button
+                        onClick={() => {
+                          setHue(240);
+                          applyColor(240);
+                          localStorage.setItem('primary-hue', 240);
+                        }}
+                        className="p-1 ml-1 text-foreground/50 hover:text-foreground bg-foreground/5 hover:bg-foreground/10 rounded-md transition-colors"
+                        title="Reset to default"
+                      >
+                        <RotateCcw size={14} />
+                      </button>
+                    </div>
+                    <div className="px-2 py-1 bg-foreground/5 rounded-md text-xs font-bold text-primary border border-primary-border/20">
+                      {hue}
+                    </div>
+                  </div>
+                  <input
+                    type="range"
+                    min="0"
+                    max="360"
+                    value={hue}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setHue(val);
+                      applyColor(val);
+                      localStorage.setItem('primary-hue', val);
+                    }}
+                    className="w-full h-4 rounded-md appearance-none cursor-pointer border-2 border-primary-border/10"
+                    style={{
+                      background:
+                        'linear-gradient(to right, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%)',
+                    }}
                   />
                 </div>
-                <div className="grid grid-cols-6 gap-3 mb-5">
-                  {[0, 30, 45, 120, 160, 210, 240, 270, 290, 310, 330, 340].map(
-                    (presetHue) => (
-                      <button
-                        key={presetHue}
-                        onClick={() => {
-                          setHue(presetHue);
-                          applyColor(presetHue);
-                          localStorage.setItem('primary-hue', presetHue);
-                        }}
-                        className={`w-7 h-7 rounded-full transition-all ${hue == presetHue ? 'ring-2 ring-primary ring-offset-2 scale-110' : 'opacity-80 hover:opacity-100'}`}
-                        style={{
-                          backgroundColor: `hsl(${presetHue}, 100%, 65%)`,
-                        }}
-                      />
-                    ),
-                  )}
-                </div>
-                <input
-                  type="range"
-                  min="0"
-                  max="360"
-                  value={hue}
-                  onChange={(e) => {
-                    const val = e.target.value;
-                    setHue(val);
-                    applyColor(val);
-                    localStorage.setItem('primary-hue', val);
-                  }}
-                  className="w-full h-2 rounded-full appearance-none cursor-pointer"
-                  style={{
-                    background:
-                      'linear-gradient(to right, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%)',
-                  }}
-                />
               </div>
             )}
           </div>
 
           {/* Theme Switcher */}
-          <div ref={dropdownRef} className="relative flex items-center">
-            <button
-              onClick={() => setIsThemeOpen(!isThemeOpen)}
-              className="p-2 rounded-lg hover:text-primary transition-all"
-            >
+          <div
+            ref={dropdownRef}
+            className="relative flex items-center h-full"
+            onMouseEnter={() => setIsThemeOpen(true)}
+            onMouseLeave={() => setIsThemeOpen(false)}
+          >
+            <button className="p-2 rounded-lg hover:text-primary transition-all cursor-default">
               {theme === 'light' ? (
                 <Sun size={19} />
               ) : theme === 'system' ? (
@@ -183,23 +194,25 @@ const Navbar = () => {
               )}
             </button>
             {isThemeOpen && (
-              <div className="absolute right-0 top-14 w-36 bg-card backdrop-blur-2xl border border-primary-border rounded-xl shadow-2xl z-50 p-1.5 animate-in fade-in zoom-in duration-200">
-                {['light', 'dark', 'system'].map((t) => (
-                  <button
-                    key={t}
-                    onClick={() => handleThemeChange(t)}
-                    className={`flex w-full items-center gap-3 px-3 py-2.5 text-xs rounded-lg capitalize transition-colors ${theme === t ? 'text-primary bg-primary/10 font-bold' : 'text-foreground/60 hover:bg-primary/5'}`}
-                  >
-                    {t === 'light' ? (
-                      <Sun size={14} />
-                    ) : t === 'system' ? (
-                      <Monitor size={14} />
-                    ) : (
-                      <Moon size={14} />
-                    )}
-                    {t}
-                  </button>
-                ))}
+              <div className="absolute right-0 top-10 pt-4 w-36 z-50">
+                <div className="bg-card backdrop-blur-2xl border border-primary-border rounded-xl shadow-2xl p-1.5 animate-in fade-in zoom-in duration-200">
+                  {['light', 'dark', 'system'].map((t) => (
+                    <button
+                      key={t}
+                      onClick={() => handleThemeChange(t)}
+                      className={`flex w-full items-center gap-3 px-3 py-2.5 text-xs rounded-lg capitalize transition-colors ${theme === t ? 'text-primary bg-primary/10 font-bold' : 'text-foreground/60 hover:bg-primary/5'}`}
+                    >
+                      {t === 'light' ? (
+                        <Sun size={14} />
+                      ) : t === 'system' ? (
+                        <Monitor size={14} />
+                      ) : (
+                        <Moon size={14} />
+                      )}
+                      {t}
+                    </button>
+                  ))}
+                </div>
               </div>
             )}
           </div>
