@@ -5,7 +5,7 @@ import React from 'react';
 
 const Layout = ({ children }) => {
   return (
-    <div className="relative flex flex-col min-h-screen">
+    <div className="relative bg-background flex flex-col min-h-screen">
       <Navbar />
       <Banner />
       <main className="grow">{children}</main>

@@ -4,7 +4,7 @@ import { FaGithub, FaTwitter, FaInstagram } from 'react-icons/fa';
 
 const SideProfile = () => {
   return (
-    <div className="bg-card/90 backdrop-blur-md rounded-3xl overflow-hidden border border-gray-800 shadow-lg transition-all duration-300">
+    <div className="bg-card/90 backdrop-blur-md rounded-3xl  overflow-hidden border border-gray-800 shadow-lg transition-all duration-300">
       {/* ইমেজের জন্য প্যাডিং এবং গোল গোল বর্ডার */}
       <div className="p-5 pb-0">
         {' '}

@@ -1,21 +1,47 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
-/* Tailwind v4 এ ডার্ক মোড ভেরিয়েন্ট সেটআপ */
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
   --primary-hue: 340;
   --primary-color: hsl(var(--primary-hue), 100%, 65%);
-  --background: #ffffff;
-  --foreground: #171717;
-  --card-bg: #f3f4f6;
+  --primary-shade: hsla(var(--primary-hue), 100%, 65%, 0.15);
+  --primary-border: hsla(var(--primary-hue), 100%, 65%, 0.2);
+
+  --background: hsl(var(--primary-hue), 40%, 97%);
+  --foreground: hsl(var(--primary-hue), 40%, 15%);
+  --card-bg: hsl(var(--primary-hue), 45%, 98%);
+  --gray-50: hsl(var(--primary-hue), 20%, 5%);
+  --gray-100: hsl(var(--primary-hue), 20%, 10%);
+  --gray-200: hsl(var(--primary-hue), 20%, 15%);
+  --gray-300: hsl(var(--primary-hue), 20%, 20%);
+  --gray-400: hsl(var(--primary-hue), 25%, 35%); /* Strong readable text */
+  --gray-500: hsl(var(--primary-hue), 25%, 45%);
+  --gray-600: hsl(var(--primary-hue), 25%, 80%);
+  --gray-700: hsl(var(--primary-hue), 30%, 85%); 
+  --gray-800: hsl(var(--primary-hue), 35%, 92%); /* Sub element backgrounds */
+  --gray-900: hsl(var(--primary-hue), 40%, 95%);
+  --gray-950: hsl(var(--primary-hue), 45%, 97%);
 }
 
-/* ডার্ক মোড ভেরিয়েবল */
 .dark {
-  --background: #120f11;
-  --foreground: #ededed;
-  --card-bg: #1e1a1d;
+  --background: hsl(var(--primary-hue), 30%, 5%);
+  --foreground: hsl(var(--primary-hue), 20%, 90%);
+  --card-bg: hsl(var(--primary-hue), 25%, 8%);
+  --primary-shade: hsla(var(--primary-hue), 100%, 65%, 0.05);
+
+  /* Normal grays for dark mode */
+  --gray-50: hsl(var(--primary-hue), 20%, 98%);
+  --gray-100: hsl(var(--primary-hue), 20%, 95%);
+  --gray-200: hsl(var(--primary-hue), 20%, 90%);
+  --gray-300: hsl(var(--primary-hue), 20%, 80%);
+  --gray-400: hsl(var(--primary-hue), 20%, 70%);
+  --gray-500: hsl(var(--primary-hue), 20%, 50%);
+  --gray-600: hsl(var(--primary-hue), 20%, 40%);
+  --gray-700: hsl(var(--primary-hue), 25%, 25%);
+  --gray-800: hsl(var(--primary-hue), 30%, 15%);
+  --gray-900: hsl(var(--primary-hue), 35%, 10%);
+  --gray-950: hsl(var(--primary-hue), 40%, 5%);
 }
 
 @theme inline {
@@ -23,22 +49,75 @@
   --color-foreground: var(--foreground);
   --color-primary: var(--primary-color);
   --color-card: var(--card-bg);
+  --color-primary-shade: var(--primary-shade);
+  --color-primary-border: var(--primary-border);
+
+  /* Map tailwind grays to css variables */
+  --color-gray-50: var(--gray-50);
+  --color-gray-100: var(--gray-100);
+  --color-gray-200: var(--gray-200);
+  --color-gray-300: var(--gray-300);
+  --color-gray-400: var(--gray-400);
+  --color-gray-500: var(--gray-500);
+  --color-gray-600: var(--gray-600);
+  --color-gray-700: var(--gray-700);
+  --color-gray-800: var(--gray-800);
+  --color-gray-900: var(--gray-900);
+  --color-gray-950: var(--gray-950);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  transition: background-color 0.3s, color 0.3s;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
   font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
 }
 
-/* কাস্টম স্লাইডার থাম্ব স্টাইল (ঐচ্ছিক) */
-input[type="range"]::-webkit-slider-thumb {
-  appearance: none;
-  width: 12px;
-  height: 12px;
-  background: white;
+/* Base utility for any hardcoded white and black specific to dark modes */
+.dark .text-white { color: #ffffff; }
+.dark .text-black { color: #000000; }
+.dark .bg-black { background-color: #000000; }
+.dark .bg-white { background-color: #ffffff; }
+
+/* In light mode text-white might be meant for buttons, so we leave it as is if it's primary. 
+   But if text-gray-300 is used on light mode, it will map to our inverted var. */
+
+/* 
+  Card styles: Theme colored shadows, removed hard borders 
+*/
+.bg-card, 
+.bg-card\/90,
+[class*="bg-card"] {
+  border-color: transparent !important;
+  box-shadow: 0 10px 40px -10px var(--primary-shade) !important;
+}
+
+/* Enhance tags and small elements in light mode */
+.dark .bg-card, 
+.dark .bg-card\/90,
+.dark [class*="bg-card"] {
+  box-shadow: 0 10px 30px -15px var(--primary-shade) !important;
+}
+
+/* Styling for range slider in Navbar */
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 20px;
+  width: 20px;
   border-radius: 50%;
-  cursor: pointer;
+  background: #ffffff;
   border: 2px solid var(--primary-color);
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  cursor: pointer;
+  margin-top: -6px;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8px;
+  cursor: pointer;
+  border-radius: 99px;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
 }

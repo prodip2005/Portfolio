@@ -14,10 +14,10 @@ const Footer = () => {
         <div className="flex flex-col items-center gap-3">
           {/* Copyright Section */}
           <div className="text-[13px] text-gray-500 font-medium">
-            <p>© 2026 Reidho Satria. All Rights Reserved.</p>
+            <p>© 2026 Prodip Hore. All Rights Reserved.</p>
           </div>
 
-          {/* Credits */}
+          {/* Credits
           <div className="text-[12px] text-gray-600 dark:text-gray-500">
             <span>Powered by </span>
             <span className="text-primary hover:underline cursor-pointer font-medium">
@@ -27,7 +27,7 @@ const Footer = () => {
             <span className="text-primary hover:underline cursor-pointer font-medium">
               Fuwari
             </span>
-          </div>
+          </div> */}
         </div>
 
         {/* Scroll to Top Button */}
