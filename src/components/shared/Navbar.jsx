@@ -28,8 +28,8 @@ const Navbar = () => {
   const navLinks = [
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
-    { name: 'Contact', path: '/contact' },
     { name: 'Projects', path: '/projects' },
+    { name: 'Contact', path: '/contact' },
   ];
 
   useEffect(() => {
@@ -121,13 +121,11 @@ const Navbar = () => {
 
         <div className="flex items-center gap-2 md:gap-4 text-foreground/70 relative h-full">
           {/* Color Picker Switcher */}
-          <div
-            ref={pickerRef}
-            className="relative flex items-center h-full"
-            onMouseEnter={() => setIsColorPickerOpen(true)}
-            onMouseLeave={() => setIsColorPickerOpen(false)}
-          >
-            <button className="hover:text-primary transition-colors p-2 cursor-default">
+          <div ref={pickerRef} className="relative flex items-center h-full">
+            <button
+              onClick={() => setIsColorPickerOpen(!isColorPickerOpen)}
+              className="hover:text-primary transition-colors p-2 cursor-pointer"
+            >
               <Palette size={19} />
             </button>
             {isColorPickerOpen && (
@@ -178,13 +176,11 @@ const Navbar = () => {
           </div>
 
           {/* Theme Switcher */}
-          <div
-            ref={dropdownRef}
-            className="relative flex items-center h-full"
-            onMouseEnter={() => setIsThemeOpen(true)}
-            onMouseLeave={() => setIsThemeOpen(false)}
-          >
-            <button className="p-2 rounded-lg hover:text-primary transition-all cursor-default">
+          <div ref={dropdownRef} className="relative flex items-center h-full">
+            <button
+              onClick={() => setIsThemeOpen(!isThemeOpen)}
+              className="p-2 rounded-lg hover:text-primary transition-all cursor-pointer"
+            >
               {theme === 'light' ? (
                 <Sun size={19} />
               ) : theme === 'system' ? (

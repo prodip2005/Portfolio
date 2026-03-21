@@ -1,38 +1,36 @@
-import React from 'react';
+"use client";
+import React, { useState, useEffect } from 'react';
 import { Clock } from 'lucide-react';
 import { ContactCard, ContactItem } from './_components/ContactCard';
 
 const ContactPage = () => {
-  const socialLinks = [
-    {
-      iconName: 'github',
-      label: 'GitHub',
-      value: 'shadowomonarch',
-      subValue: 'Open source contributions',
-      href: 'https://github.com/shadowomonarch',
-    },
-    {
-      iconName: 'twitter',
-      label: 'Twitter',
-      value: '@prodiphore',
-      subValue: 'Tech updates & insights',
-      href: 'https://twitter.com/prodiphore',
-    },
-    {
-      iconName: 'linkedin',
-      label: 'LinkedIn',
-      value: 'prodiphore',
-      subValue: 'Professional networking',
-      href: 'https://linkedin.com/in/prodiphore',
-    },
-    {
-      iconName: 'discord',
-      label: 'Discord',
-      value: '@shadowomonarch',
-      subValue: 'Real-time discussions',
-      href: 'https://discord.com/users/shadowomonarch',
-    },
-  ];
+  const [socialLinks, setSocialLinks] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchContacts = async () => {
+      try {
+        const response = await fetch('/api/contact');
+        if (response.ok) {
+          const data = await response.json();
+          // Map to match the ContactItem component props
+          const formattedLinks = data.map(item => ({
+            iconName: item.name.toLowerCase().trim(),
+            label: item.name,
+            value: item.username,
+            subValue: 'Let\'s connect', // Default placeholder subValue
+            href: item.link,
+          }));
+          setSocialLinks(formattedLinks);
+        }
+      } catch (error) {
+        console.error("Failed to fetch contact links:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchContacts();
+  }, []);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 relative z-10 -mt-20 lg:-mt-24">
@@ -46,8 +44,7 @@ const ContactPage = () => {
             Let&apos;s connect and <br /> collaborate together.
           </h1>
           <p className="text-foreground/80 leading-relaxed max-w-2xl text-[15px]">
-            I&apos;m always open to discussing web development, network engineering, open-source projects,
-            and new technologies. Reach out through any of these channels below!
+            I&apos;m always open to discussing web development, network engineering, open-source projects, and new technologies. Reach out through any of these channels below!
           </p>
         </div>
 
@@ -55,8 +52,8 @@ const ContactPage = () => {
           
           <div className="lg:col-span-1 space-y-6">
             <h3 className="text-xl font-bold text-foreground mb-4 flex items-center gap-3">
-               <span className="w-1 h-5 rounded-full bg-primary" style={{ backgroundColor: 'var(--primary-color)' }}></span>
-               Direct Contact
+              <span className="w-1 h-5 rounded-full bg-primary" style={{ backgroundColor: 'var(--primary-color)' }}></span>
+              Direct Contact
             </h3>
             <ContactItem
               iconName="mail"
@@ -70,13 +67,23 @@ const ContactPage = () => {
 
           <div className="lg:col-span-2">
             <h3 className="text-xl font-bold text-foreground mb-4 flex items-center gap-3">
-               <span className="w-1 h-5 rounded-full bg-primary" style={{ backgroundColor: 'var(--primary-color)' }}></span>
-               Social & Professional
+              <span className="w-1 h-5 rounded-full bg-primary" style={{ backgroundColor: 'var(--primary-color)' }}></span>
+              Social & Professional
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {socialLinks.map((link, index) => (
-                <ContactItem key={index} {...link} />
-              ))}
+              {isLoading ? (
+                <div className="col-span-full py-4 text-center text-foreground/50">
+                  Loading contacts...
+                </div>
+              ) : socialLinks.length > 0 ? (
+                socialLinks.map((link, index) => (
+                  <ContactItem key={index} {...link} />
+                ))
+              ) : (
+                <div className="col-span-full py-4 text-foreground/50">
+                  No contact links added yet.
+                </div>
+              )}
             </div>
           </div>
 

@@ -1,30 +1,35 @@
-import React from 'react';
-
-const achievementsData = [
-  {
-    type: 'International',
-    date: 'Mar 7, 2026',
-    rank: '35th',
-    title: 'Codeforces Round #935 (Div. 2)',
-    result: 'Top 35th',
-  },
-  {
-    type: 'International',
-    date: 'Mar 7, 2026',
-    rank: '54th',
-    title: 'LeetCode Weekly Contest 388',
-    result: 'Top 54th',
-  },
-  {
-    type: 'Regional',
-    date: 'Feb 7, 2026',
-    rank: '3rd',
-    title: 'NCPC 2026 Quals',
-    result: 'Top 3rd',
-  },
-];
+"use client";
+import React, { useState, useEffect } from 'react';
 
 const Achievement = () => {
+  const [achievementsData, setAchievementsData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchAchievements = async () => {
+      try {
+        const response = await fetch('/api/achievements');
+        const data = await response.json();
+
+        if (data && data.length > 0) {
+          setAchievementsData(data);
+        } else {
+          setAchievementsData([]);
+        }
+      } catch (error) {
+        console.error('Failed to fetch achievements:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchAchievements();
+  }, []);
+
+  if (!isLoading && achievementsData.length === 0) {
+    return null;
+  }
+
   return (
     <section className="bg-card/90 backdrop-blur-md p-8 rounded-3xl border border-gray-800 shadow-2xl">
       <div className="flex justify-between items-center mb-6">
@@ -45,51 +50,57 @@ const Achievement = () => {
         </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
-        {achievementsData.map((item, index) => (
-          <div
-            key={index}
-            className="bg-background/50 border border-gray-800 p-5 rounded-2xl hover:border-primary/30 transition-all group"
-          >
-            <div className="flex justify-between items-start mb-4">
-              <div className="space-y-1">
-                <span className="text-[10px] text-primary/80 font-bold border-b border-primary/30 pb-0.5">
-                  {item.type}
-                </span>
-                <p className="text-[11px] text-gray-500 font-medium">
-                  {item.date}
-                </p>
+      {isLoading ? (
+        <div className="text-center py-10 text-gray-500">
+          Loading achievements...
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+          {achievementsData.map((item, index) => (
+            <div
+              key={index}
+              className="bg-background/50 border border-gray-800 p-5 rounded-2xl hover:border-primary/30 transition-all group"
+            >
+              <div className="flex justify-between items-start mb-4">
+                <div className="space-y-1">
+                  <span className="text-[10px] text-primary/80 font-bold border-b border-primary/30 pb-0.5">
+                    {item.type}
+                  </span>
+                  <p className="text-[11px] text-gray-500 font-medium">
+                    {item.date}
+                  </p>
+                </div>
+                <div className="bg-primary/10 px-3 py-1 rounded-lg text-center">
+                  <p className="text-primary font-bold text-sm leading-none">
+                    {item.rank}
+                  </p>
+                  <p className="text-[8px] text-primary/60 uppercase font-bold tracking-tighter">
+                    Rank
+                  </p>
+                </div>
               </div>
-              <div className="bg-primary/10 px-3 py-1 rounded-lg text-center">
-                <p className="text-primary font-bold text-sm leading-none">
-                  {item.rank}
-                </p>
-                <p className="text-[8px] text-primary/60 uppercase font-bold tracking-tighter">
-                  Rank
-                </p>
+
+              <h3 className="text-lg font-bold text-gray-200 mb-6 group-hover:text-foreground transition-colors">
+                {item.title}
+              </h3>
+
+              <div className="flex justify-between items-center pt-4 border-t border-gray-800">
+                <div>
+                  <p className="text-[9px] text-gray-500 uppercase font-bold tracking-widest">
+                    Result
+                  </p>
+                  <p className="text-sm text-gray-300 font-semibold">
+                    {item.result}
+                  </p>
+                </div>
+                <button className="bg-gray-800/50 hover:bg-gray-700 text-gray-300 px-4 py-1.5 rounded-xl text-xs font-medium transition-all">
+                  Writeup
+                </button>
               </div>
             </div>
-
-            <h3 className="text-lg font-bold text-gray-200 mb-6 group-hover:text-foreground transition-colors">
-              {item.title}
-            </h3>
-
-            <div className="flex justify-between items-center pt-4 border-t border-gray-800">
-              <div>
-                <p className="text-[9px] text-gray-500 uppercase font-bold tracking-widest">
-                  Result
-                </p>
-                <p className="text-sm text-gray-300 font-semibold">
-                  {item.result}
-                </p>
-              </div>
-              <button className="bg-gray-800/50 hover:bg-gray-700 text-gray-300 px-4 py-1.5 rounded-xl text-xs font-medium transition-all">
-                Writeup
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </section>
   );
 };

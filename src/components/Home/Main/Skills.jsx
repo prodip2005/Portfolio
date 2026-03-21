@@ -1,77 +1,71 @@
-import React from 'react';
-import { Code2, Database, Layout, BrainCircuit } from 'lucide-react';
+"use client";
+import React, { useState, useEffect } from 'react';
+import { Code2, Database, Layout, BrainCircuit, Wrench, Globe } from 'lucide-react';
 
-const SkillCategory = ({ title, skills, icon: Icon }) => (
-  <div className="bg-card/40 backdrop-blur-md p-6 rounded-2xl border border-primary-border/10 hover:border-primary/30 transition-all duration-300 group">
-    <div className="flex items-center gap-3 mb-4">
-      <div className="p-2 rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300">
-        <Icon size={20} />
+const getIconForCategory = (title) => {
+  const lowerTitle = title.toLowerCase();
+  if (lowerTitle.includes('language') || lowerTitle.includes('code')) return Code2;
+  if (lowerTitle.includes('frontend') || lowerTitle.includes('design') || lowerTitle.includes('ui')) return Layout;
+  if (lowerTitle.includes('backend') || lowerTitle.includes('database') || lowerTitle.includes('server')) return Database;
+  if (lowerTitle.includes('machine learning') || lowerTitle.includes('ai') || lowerTitle.includes('cp') || lowerTitle.includes('algorithm')) return BrainCircuit;
+  if (lowerTitle.includes('tool') || lowerTitle.includes('devops')) return Wrench;
+  return Globe;
+};
+
+const SkillCategory = ({ title, skills }) => {
+  const Icon = getIconForCategory(title);
+  
+  return (
+    <div className="bg-card/40 backdrop-blur-md p-6 rounded-2xl border border-primary-border/10 hover:border-primary/30 transition-all duration-300 group">
+      <div className="flex items-center gap-3 mb-4">
+        <div className="p-2 rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300">
+          <Icon size={20} />
+        </div>
+        <h3 className="font-bold text-foreground text-sm uppercase tracking-wider">
+          {title}
+        </h3>
       </div>
-      <h3 className="font-bold text-foreground text-sm uppercase tracking-wider">
-        {title}
-      </h3>
+      <div className="flex flex-wrap gap-2">
+        {skills.map((skill) => (
+          <span
+            key={skill}
+            className="px-3 py-1 text-xs font-medium rounded-full bg-background border border-primary-border/10 text-foreground/60 hover:text-primary hover:border-primary/40 transition-colors"
+          >
+            {skill}
+          </span>
+        ))}
+      </div>
     </div>
-    <div className="flex flex-wrap gap-2">
-      {skills.map((skill) => (
-        <span
-          key={skill}
-          className="px-3 py-1 text-xs font-medium rounded-full bg-background border border-primary-border/10 text-foreground/60 hover:text-primary hover:border-primary/40 transition-colors"
-        >
-          {skill}
-        </span>
-      ))}
-    </div>
-  </div>
-);
+  );
+};
 
 const Skills = () => {
-  const skillData = [
-    {
-      title: 'Languages',
-      icon: Code2,
-      skills: ['C', 'C++', 'Java', 'JavaScript', 'PHP'],
-    },
-    {
-      title: 'Frontend',
-      icon: Layout,
-      skills: [
-        'HTML',
-        'CSS',
-        'React.js',
-        'Next.js',
-        'Vue',
-        'Tailwind',
-        'DaisyUI',
-        'ShadeCN UI',
-      ],
-    },
-    {
-      title: 'Backend & DB',
-      icon: Database,
-      skills: [
-        'Node.js',
-        'Express.js',
-        'MongoDB',
-        'PostgreSQL',
-        'Prisma',
-        'Supabase',
-      ],
-    },
-    {
-      title: 'Machine Learning & CP',
-      icon: BrainCircuit,
-      skills: [
-        'Algorithms',
-        'Data Structures',
-        'Competitive Programming',
-        'Machine Learning',
-      ],
-    },
-  ];
+  const [skillData, setSkillData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchSkills = async () => {
+      try {
+        const response = await fetch('/api/skills');
+        if (response.ok) {
+          const data = await response.json();
+          setSkillData(data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch skills:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchSkills();
+  }, []);
+
+  if (!isLoading && skillData.length === 0) {
+    return null;
+  }
 
   return (
     <div className="mt-8 space-y-8">
-      {/* Header Section (Same as Collaboration style) */}
       <section className="bg-card/90 backdrop-blur-md p-8 rounded-3xl border border-primary-border/10 shadow-2xl transition-all duration-300">
         <div className="mb-8">
           <span className="text-primary text-[10px] font-bold uppercase tracking-[0.2em]">
@@ -85,17 +79,21 @@ const Skills = () => {
           </p>
         </div>
 
-        {/* Skills Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {skillData.map((category) => (
-            <SkillCategory
-              key={category.title}
-              title={category.title}
-              icon={category.icon}
-              skills={category.skills}
-            />
-          ))}
-        </div>
+        {isLoading ? (
+          <div className="py-8 text-center text-foreground/50">
+             Loading skills...
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {skillData.map((category) => (
+              <SkillCategory
+                key={category._id || category.title}
+                title={category.title}
+                skills={Array.isArray(category.skills) ? category.skills : []}
+              />
+            ))}
+          </div>
+        )}
       </section>
     </div>
   );

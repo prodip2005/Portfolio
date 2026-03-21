@@ -49,7 +49,6 @@ export const metadata = {
     siteName: 'Prodip Hore Portfolio',
     images: [
       {
-        // তোমার প্রোফাইল পিকচারটি মেইন ইমেজ হিসেবে সেট করা হলো
         url: 'https://i.ibb.co.com/RkfqzktR/190808987.jpg',
         width: 1200,
         height: 630,

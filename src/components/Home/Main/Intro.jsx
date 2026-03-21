@@ -1,7 +1,39 @@
+"use client";
 import Link from 'next/link';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Intro = () => {
+  const [mainInfo, setMainInfo] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchMainInfo = async () => {
+      try {
+        const res = await fetch('/api/maininfo');
+        if (res.ok) {
+          const data = await res.json();
+          setMainInfo(data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch main info:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchMainInfo();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <section className="bg-card/90 backdrop-blur-md p-8 rounded-3xl border border-gray-800 shadow-2xl transition-colors duration-300 min-h-[350px] flex items-center justify-center">
+        <span className="text-foreground/50">Loading intro...</span>
+      </section>
+    );
+  }
+
+  // Helper arrays for dynamic titles based on user preferences in future
+  const defaultTitles = ["MERN Stack Developer", "Competitive Programmer", "ML Enthusiast"];
+
   return (
     <section className="bg-card/90 backdrop-blur-md p-8 rounded-3xl border border-gray-800 shadow-2xl transition-colors duration-300">
       <span className="text-primary text-xs font-bold uppercase tracking-widest">
@@ -9,26 +41,19 @@ const Intro = () => {
       </span>
 
       <h1 className="text-4xl font-bold text-foreground mt-4">
-        Hi, I'm Prodip Hore.
+        Hi, I&apos;m {mainInfo?.name || "Prodip Hore"}.
       </h1>
 
-      <p className="text-gray-400 mt-6 leading-relaxed">
-        A passionate MERN Stack Developer and Competitive Programmer. Currently
-        studying Computer Science and Engineering (CSE) at Patuakhali Science
-        and Technology University. My ultimate goal is to dive deep into Machine
-        Learning while building robust web applications.
+      <p className="text-gray-400 mt-6 leading-relaxed whitespace-pre-line">
+        {mainInfo?.description || "A passionate MERN Stack Developer. Currently building robust web applications and learning new technologies."}
       </p>
 
       <div className="flex flex-wrap gap-3 mt-6">
-        <span className="px-3 py-1 bg-background text-gray-400 text-xs rounded-lg border border-gray-700">
-          Patuakhali, Bangladesh
-        </span>
-        <span className="px-3 py-1 bg-background text-gray-400 text-xs rounded-lg border border-gray-700">
-          Web Dev & CP
-        </span>
-        <span className="px-3 py-1 bg-background text-gray-400 text-xs rounded-lg border border-gray-700">
-          ML Enthusiast
-        </span>
+        {defaultTitles.map((title, idx) => (
+          <span key={idx} className="px-3 py-1 bg-background text-gray-400 text-xs rounded-lg border border-gray-700">
+            {title}
+          </span>
+        ))}
       </div>
 
       <div className="flex flex-wrap items-center gap-6 mt-10">
@@ -37,7 +62,6 @@ const Intro = () => {
             View Projects
           </button>
         </Link>
-
         <Link href={'/about'}>
           <button className="text-gray-400 font-medium hover:text-primary transition">
             About Me
