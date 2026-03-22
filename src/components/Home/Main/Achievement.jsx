@@ -10,7 +10,7 @@ const Achievement = () => {
     return await res.json();
   });
   
-  const achievementsData = fullachievements ? fullachievements.slice(0, 3) : [];
+  const achievementsData = fullachievements ? fullachievements.slice(0, 2) : [];
 
   if (!isLoading && achievementsData.length === 0) {
     return null;
@@ -40,7 +40,7 @@ const Achievement = () => {
       </div>
 
       {!isLoading && (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
           {achievementsData.map((item, index) => (
             <div
               key={index}
