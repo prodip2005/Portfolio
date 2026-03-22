@@ -90,41 +90,28 @@ const ProjectCard = ({ project }) => (
 
 const AllProjects = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [projects, setProjects] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const projectsPerPage = 6;
 
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const response = await fetch('/api/projects');
-        const data = await response.json();
-        if (data && data.length > 0) {
-          setProjects(data);
-        } else {
-          // Fallback static data if DB is empty
-          setProjects([
-            {
-              title: 'Real-time Chat Engine',
-              type: 'Web App',
-              Date: '2024',
-              image: '/projects/chat.jpg',
-              description:
-                'Encrypted messaging platform using Socket.io for instant delivery and Supabase for database management.',
-              tags: ['Next.js', 'Socket.io', 'Supabase', 'Prisma'],
-              github: 'https://github.com/prodiphore/chat-app',
-              live: 'https://chat-live.com',
-            }
-          ]);
-        }
-      } catch (error) {
-        console.error('Failed to fetch projects:', error);
-      } finally {
-        setIsLoading(false);
+  const { data: projectsData, isLoading } = useSharedData('projectsFull', async () => {
+    const response = await fetch('/api/projects');
+    const data = await response.json();
+    if (data && data.length > 0) return data;
+    // Fallback static data if DB is empty
+    return [
+      {
+        title: 'Real-time Chat Engine',
+        type: 'Web App',
+        Date: '2024',
+        image: '/projects/chat.jpg',
+        description: 'Encrypted messaging platform using Socket.io...',
+        tags: ['Next.js', 'Socket.io', 'Supabase', 'Prisma'],
+        github: 'https://github.com/prodiphore/chat-app',
+        live: 'https://chat-live.com',
       }
-    };
-    fetchProjects();
-  }, []);
+    ];
+  });
+
+  const projects = projectsData || [];
 
   // Pagination Logic
   const indexOfLastProject = currentPage * projectsPerPage;
@@ -167,52 +154,54 @@ const AllProjects = () => {
           </h2>
         </div>
 
-        {isLoading ? <PageLoader /> : (
-            <>
-                {/* Projects Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {currentProjects.map((p, i) => (
-                    <ProjectCard key={i} project={p} />
+        {isLoading ? (
+          <div className="flex justify-center items-center py-20 w-full"><PageLoader /></div>
+        ) : (
+          <>
+            {/* Projects Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {currentProjects.map((p, i) => (
+                <ProjectCard key={i} project={p} />
+            ))}
+            </div>
+
+            {/* Pagination Controls */}
+            {projects.length > projectsPerPage && (
+            <div className="mt-12 flex justify-center items-center gap-4">
+                <button
+                onClick={() => paginate(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="p-2 rounded-xl border border-gray-800 text-gray-400 hover:border-primary hover:text-primary disabled:opacity-30 disabled:hover:text-gray-400 transition-all"
+                >
+                <ChevronLeft size={20} />
+                </button>
+
+                <div className="flex gap-2">
+                {[...Array(totalPages)].map((_, i) => (
+                    <button
+                    key={i}
+                    onClick={() => paginate(i + 1)}
+                    className={`w-10 h-10 rounded-xl border font-bold transition-all ${
+                        currentPage === i + 1
+                        ? 'bg-primary border-primary text-white shadow-[0_0_15px_rgba(var(--primary-color),0.4)]'
+                        : 'border-gray-800 text-gray-500 hover:border-gray-600'
+                    }`}
+                    >
+                    {i + 1}
+                    </button>
                 ))}
                 </div>
 
-                {/* Pagination Controls */}
-                {projects.length > projectsPerPage && (
-                <div className="mt-12 flex justify-center items-center gap-4">
-                    <button
-                    onClick={() => paginate(currentPage - 1)}
-                    disabled={currentPage === 1}
-                    className="p-2 rounded-xl border border-gray-800 text-gray-400 hover:border-primary hover:text-primary disabled:opacity-30 disabled:hover:text-gray-400 transition-all"
-                    >
-                    <ChevronLeft size={20} />
-                    </button>
-
-                    <div className="flex gap-2">
-                    {[...Array(totalPages)].map((_, i) => (
-                        <button
-                        key={i}
-                        onClick={() => paginate(i + 1)}
-                        className={`w-10 h-10 rounded-xl border font-bold transition-all ${
-                            currentPage === i + 1
-                            ? 'bg-primary border-primary text-white shadow-[0_0_15px_rgba(var(--primary-color),0.4)]'
-                            : 'border-gray-800 text-gray-500 hover:border-gray-600'
-                        }`}
-                        >
-                        {i + 1}
-                        </button>
-                    ))}
-                    </div>
-
-                    <button
-                    onClick={() => paginate(currentPage + 1)}
-                    disabled={currentPage === totalPages}
-                    className="p-2 rounded-xl border border-gray-800 text-gray-400 hover:border-primary hover:text-primary disabled:opacity-30 transition-all"
-                    >
-                    <ChevronRight size={20} />
-                    </button>
-                </div>
-                )}
-            </>
+                <button
+                onClick={() => paginate(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className="p-2 rounded-xl border border-gray-800 text-gray-400 hover:border-primary hover:text-primary disabled:opacity-30 transition-all"
+                >
+                <ChevronRight size={20} />
+                </button>
+            </div>
+            )}
+          </>
         )}
       </div>
     </div>

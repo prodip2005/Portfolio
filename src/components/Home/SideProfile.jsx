@@ -25,36 +25,18 @@ const getIcon = (name) => {
 };
 
 const SideProfile = () => {
-  const [data, setData] = useState({
-    mainInfo: null,
-    socials: []
+  const { data: mainData } = useSharedData('mainInfo', async () => {
+    const res = await fetch('/api/maininfo');
+    return res.ok ? res.json() : null;
   });
-  const [isLoading, setIsLoading] = useState(true);
+  
+  const { data: socialsData } = useSharedData('sideContact', async () => {
+    const res = await fetch('/api/contact');
+    return res.ok ? res.json() : [];
+  });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [mainRes, contactRes] = await Promise.all([
-          fetch('/api/maininfo'),
-          fetch('/api/contact')
-        ]);
-
-        setData({
-          mainInfo: mainRes.ok ? await mainRes.json() : null,
-          socials: contactRes.ok ? await contactRes.json() : []
-        });
-      } catch (error) {
-        console.error("Failed to fetch side profile data:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
-
-  if (isLoading) { return <div className="flex justify-center items-center py-10 w-full bg-card/90 backdrop-blur-md rounded-3xl border border-gray-800 shadow-lg min-h-[400px]"><PageLoader /></div>; }
-
-  const { mainInfo, socials } = data;
+  const mainInfo = mainData || null;
+  const socials = socialsData || [];
 
   return (
     <div className="bg-card/90 backdrop-blur-md rounded-3xl overflow-hidden border border-gray-800 shadow-lg transition-all duration-300">

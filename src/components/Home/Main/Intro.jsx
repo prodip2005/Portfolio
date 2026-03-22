@@ -5,25 +5,10 @@ import React, { useEffect, useState } from 'react';
 import { useSharedData } from '@/hooks/useSharedData';
 
 const Intro = () => {
-  const [mainInfo, setMainInfo] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchMainInfo = async () => {
-      try {
-        const res = await fetch('/api/maininfo');
-        if (res.ok) {
-          const data = await res.json();
-          setMainInfo(data);
-        }
-      } catch (error) {
-        console.error("Failed to fetch main info:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchMainInfo();
-  }, []);
+  const { data: mainInfo, isLoading } = useSharedData('mainInfo', async () => {
+    const res = await fetch('/api/maininfo');
+    return res.json();
+  });
 
   if (isLoading) { return <div className="flex justify-center items-center py-10 w-full bg-card/90 backdrop-blur-md rounded-3xl border border-gray-800 shadow-lg min-h-[400px]"><PageLoader /></div>; }
 

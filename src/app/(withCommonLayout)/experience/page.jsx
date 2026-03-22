@@ -27,7 +27,9 @@ const ExperiencePage = () => {
           </p>
         </div>
 
-        {isLoading ? <PageLoader /> : experiences.length === 0 ? (
+        {isLoading ? (
+          <div className="flex justify-center items-center py-20 w-full"><PageLoader /></div>
+        ) : experiences.length === 0 ? (
           <div className="text-center py-20 text-gray-500 bg-background/30 rounded-2xl border border-dashed border-gray-800">
             No experiences recorded yet.
           </div>

@@ -38,7 +38,7 @@ const Experience = () => {
         </Link>
       </div>
 
-      {isLoading ? (<div className='flex justify-center items-center py-10 w-full'><PageLoader /></div>) : (
+      {!isLoading && (
         <div className="space-y-6">
           {experiencesData.map((exp, index) => (
             <div

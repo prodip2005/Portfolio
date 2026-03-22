@@ -25,33 +25,55 @@ const Education = () => {
         </p>
       </div>
 
-      {isLoading ? (<div className='flex justify-center items-center py-10 w-full'><PageLoader /></div>) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {educationData.map((edu, index) => (
+      {!isLoading && (
+        <div className="space-y-6 mt-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-linear-to-b before:from-transparent before:via-gray-800 before:to-transparent">
+          {educationData.map((item, index) => (
             <div
               key={index}
-              className="p-6 bg-background/40 border border-gray-800/60 rounded-2xl hover:border-primary/30 transition-all group"
+              className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active"
             >
-              <div className="flex justify-between items-start mb-2">
-                <h3 className="text-lg font-bold text-gray-200 group-hover:text-primary transition-colors leading-tight">
-                  {edu.degree}
-                </h3>
-                <span className="px-2 py-0.5 bg-primary/10 text-primary text-[9px] font-bold rounded border border-primary/20">
-                  {edu.status}
-                </span>
+              <div className="flex items-center justify-center w-10 h-10 rounded-full border border-gray-800 bg-gray-900 group-hover:border-primary/50 group-hover:bg-primary/10 text-primary-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-colors">
+                <svg
+                  className="w-4 h-4 text-primary"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 14l9-5-9-5-9 5 9 5z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 14l9-5-9-5-9 5 9 5z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 21l-9-5-9 5 9 5 9-5z"
+                  />
+                </svg>
               </div>
-
-              <p className="text-primary/80 text-sm font-semibold mb-3">
-                {edu.institution}
-              </p>
-
-              <div className="flex items-center justify-between mt-6 pt-4 border-t border-gray-800/50">
-                <span className="text-xs font-mono text-gray-500">
-                  {edu.period}
-                </span>
-                <span className="px-2.5 py-1 bg-gray-800/80 text-[10px] text-gray-400 font-bold rounded-lg border border-gray-700">
-                  {edu.major}
-                </span>
+              <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-background/50 border border-gray-800/60 p-5 rounded-2xl group-hover:border-primary/30 transition-all">
+                <div className="flex flex-col space-y-2 mb-3">
+                  <span className="text-primary font-mono text-xs font-bold tracking-wider">
+                    {item.period}
+                  </span>
+                  <h3 className="font-bold text-gray-200 text-lg leading-tight group-hover:text-primary transition-colors">
+                    {item.degree}
+                  </h3>
+                </div>
+                <div className="text-gray-400 text-sm font-medium">
+                  {item.institution}
+                </div>
+                <div className="text-gray-500 text-xs mt-1 italic">
+                  Major: {item.major}
+                </div>
               </div>
             </div>
           ))}

@@ -39,7 +39,7 @@ const Achievement = () => {
         </Link>
       </div>
 
-      {isLoading ? (<div className='flex justify-center items-center py-10 w-full'><PageLoader /></div>) : (
+      {!isLoading && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
           {achievementsData.map((item, index) => (
             <div

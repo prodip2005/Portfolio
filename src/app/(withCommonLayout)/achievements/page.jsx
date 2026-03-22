@@ -17,7 +17,7 @@ const AchievementCard = ({ item }) => (
           <span className="w-1.5 h-1.5 rounded-full bg-gray-600"></span> {item.date}
         </p>
       </div>
-      <div className="bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/20 px-4 py-2 rounded-xl text-center shadow-lg transform group-hover:scale-110 transition-transform duration-300">
+      <div className="bg-linear-to-br from-primary/20 to-primary/5 border border-primary/20 px-4 py-2 rounded-xl text-center shadow-lg transform group-hover:scale-110 transition-transform duration-300">
         <p className="text-primary font-black text-xl leading-none">
           {item.rank}
         </p>
@@ -60,11 +60,6 @@ const AllAchievements = () => {
   const currentItems = achievements.slice(indexOfFirstItem, indexOfLastItem);
   const totalPages = Math.ceil(achievements.length / itemsPerPage);
 
-  const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 relative z-10 -mt-20 lg:-mt-24">
       <div className="bg-card/90 backdrop-blur-md border border-gray-800 rounded-3xl p-8 md:p-12 mb-8 shadow-2xl w-full">
@@ -83,48 +78,51 @@ const AllAchievements = () => {
           </p>
         </div>
 
-        {isLoading ? <PageLoader /> : (
+        {isLoading ? (
+          <div className="flex justify-center items-center py-20 w-full"><PageLoader /></div>
+        ) : (
           <>
+            {/* Achievement Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {currentItems.map((item, i) => (
+                {currentItems.map((item, i) => (
                 <AchievementCard key={i} item={item} />
-              ))}
+                ))}
             </div>
 
             {achievements.length > itemsPerPage && (
-              <div className="mt-14 flex justify-center items-center gap-4">
+                <div className="mt-14 flex justify-center items-center gap-4">
                 <button
-                  onClick={() => paginate(currentPage - 1)}
-                  disabled={currentPage === 1}
-                  className="p-2.5 rounded-xl border border-gray-800 text-gray-400 hover:border-primary hover:text-primary disabled:opacity-30 disabled:hover:text-gray-400 transition-all"
+                    onClick={() => paginate(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className="p-2.5 rounded-xl border border-gray-800 text-gray-400 hover:border-primary hover:text-primary disabled:opacity-30 disabled:hover:text-gray-400 transition-all"
                 >
-                  <ChevronLeft size={20} />
+                    <ChevronLeft size={20} />
                 </button>
 
                 <div className="flex gap-2">
-                  {[...Array(totalPages)].map((_, i) => (
+                    {[...Array(totalPages)].map((_, i) => (
                     <button
-                      key={i}
-                      onClick={() => paginate(i + 1)}
-                      className={`w-11 h-11 rounded-xl border font-bold transition-all ${
+                        key={i}
+                        onClick={() => paginate(i + 1)}
+                        className={`w-11 h-11 rounded-xl border font-bold transition-all ${
                         currentPage === i + 1
-                          ? 'bg-primary border-primary text-white shadow-[0_0_15px_rgba(var(--primary-color),0.4)] scale-110'
-                          : 'border-gray-800 text-gray-400 hover:border-gray-600 hover:text-gray-200'
-                      }`}
+                            ? 'bg-primary border-primary text-white shadow-[0_0_15px_rgba(var(--primary-color),0.4)] scale-110'
+                            : 'border-gray-800 text-gray-400 hover:border-gray-600 hover:text-gray-200'
+                        }`}
                     >
-                      {i + 1}
+                        {i + 1}
                     </button>
-                  ))}
+                    ))}
                 </div>
 
                 <button
-                  onClick={() => paginate(currentPage + 1)}
-                  disabled={currentPage === totalPages}
-                  className="p-2.5 rounded-xl border border-gray-800 text-gray-400 hover:border-primary hover:text-primary disabled:opacity-30 transition-all"
+                    onClick={() => paginate(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    className="p-2.5 rounded-xl border border-gray-800 text-gray-400 hover:border-primary hover:text-primary disabled:opacity-30 transition-all"
                 >
-                  <ChevronRight size={20} />
+                    <ChevronRight size={20} />
                 </button>
-              </div>
+                </div>
             )}
           </>
         )}

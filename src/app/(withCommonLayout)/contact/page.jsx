@@ -36,50 +36,56 @@ const ContactPage = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          
-          <div className="lg:col-span-1 space-y-6">
-            <h3 className="text-xl font-bold text-foreground mb-4 flex items-center gap-3">
-              <span className="w-1 h-5 rounded-full bg-primary" style={{ backgroundColor: 'var(--primary-color)' }}></span>
-              Direct Contact
-            </h3>
-            <ContactItem
-              iconName="mail"
-              label="Primary Email"
-              value="prodiphore@gmail.com"
-              subValue="Best for collaboration inquiries"
-              href="mailto:prodiphore@gmail.com"
-              isPrimary={true}
-            />
-          </div>
+        {isLoading ? (
+          <div className="flex justify-center items-center py-20 w-full"><PageLoader /></div>
+        ) : (
+          <>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              
+              <div className="lg:col-span-1 space-y-6">
+                <h3 className="text-xl font-bold text-foreground mb-4 flex items-center gap-3">
+                  <span className="w-1 h-5 rounded-full bg-primary" style={{ backgroundColor: 'var(--primary-color)' }}></span>
+                  Direct Contact
+                </h3>
+                <ContactItem
+                  iconName="mail"
+                  label="Primary Email"
+                  value="prodiphore@gmail.com"
+                  subValue="Best for collaboration inquiries"
+                  href="mailto:prodiphore@gmail.com"
+                  isPrimary={true}
+                />
+              </div>
 
-          <div className="lg:col-span-2">
-            <h3 className="text-xl font-bold text-foreground mb-4 flex items-center gap-3">
-              <span className="w-1 h-5 rounded-full bg-primary" style={{ backgroundColor: 'var(--primary-color)' }}></span>
-              Social & Professional
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {isLoading ? (<div className='flex justify-center items-center py-10 w-full'><PageLoader /></div>) : socialLinks.length > 0 ? (
-                socialLinks.map((link, index) => (
-                  <ContactItem key={index} {...link} />
-                ))
-              ) : (
-                <div className="col-span-full py-4 text-foreground/50">
-                  No contact links added yet.
+              <div className="lg:col-span-2">
+                <h3 className="text-xl font-bold text-foreground mb-4 flex items-center gap-3">
+                  <span className="w-1 h-5 rounded-full bg-primary" style={{ backgroundColor: 'var(--primary-color)' }}></span>
+                  Social & Professional
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {socialLinks.length > 0 ? (
+                    socialLinks.map((link, index) => (
+                      <ContactItem key={index} {...link} />
+                    ))
+                  ) : (
+                    <div className="col-span-full py-4 text-foreground/50">
+                      No contact links added yet.
+                    </div>
+                  )}
                 </div>
-              )}
+              </div>
+
             </div>
-          </div>
 
-        </div>
-
-        <div className="mt-14 flex items-center justify-center gap-3 py-4 px-8 bg-card/50 backdrop-blur-md rounded-2xl border border-gray-800 w-fit mx-auto shadow-sm">
-          <Clock size={16} className="text-primary" />
-          <p className="text-sm text-foreground/70">
-            Typical response time:{' '}
-            <span className="text-foreground font-bold">24-48 hours</span>
-          </p>
-        </div>
+            <div className="mt-14 flex items-center justify-center gap-3 py-4 px-8 bg-card/50 backdrop-blur-md rounded-2xl border border-gray-800 w-fit mx-auto shadow-sm">
+              <Clock size={16} className="text-primary" />
+              <p className="text-sm text-foreground/70">
+                Typical response time:{' '}
+                <span className="text-foreground font-bold">24-48 hours</span>
+              </p>
+            </div>
+          </>
+        )}
       </ContactCard>
     </div>
   );
