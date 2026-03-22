@@ -50,13 +50,7 @@ const SideProfile = () => {
     fetchData();
   }, []);
 
-  if (isLoading) {
-    return (
-      <div className="bg-card/90 backdrop-blur-md rounded-3xl overflow-hidden border border-gray-800 shadow-lg min-h-[400px] flex items-center justify-center">
-        <span className="text-foreground/50 text-sm">Loading profile...</span>
-      </div>
-    );
-  }
+  if (isLoading) { return null; }
 
   const { mainInfo, socials } = data;
 
@@ -83,7 +77,7 @@ const SideProfile = () => {
 
       <div className="p-6 text-center">
         <h3 className="text-xl font-bold text-foreground">
-          {mainInfo?.name || "Loading..."}
+          {mainInfo?.name || ""}
         </h3>
         <p className="text-gray-400 text-sm mt-3 leading-relaxed line-clamp-4">
           {mainInfo?.description || "No description available."}

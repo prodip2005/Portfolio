@@ -57,11 +57,7 @@ const Education = () => {
         </p>
       </div>
 
-      {isLoading ? (
-        <div className="text-center py-10 text-gray-500">
-          Loading education...
-        </div>
-      ) : (
+      {isLoading ? null : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {educationData.map((edu, index) => (
             <div

@@ -1,7 +1,8 @@
 "use client";
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { LayoutDashboard, User, Code2, GraduationCap, Briefcase, Award, FolderGit2, Mail } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
+import { auth, signOut } from '@/lib/firebase';
+import { LogOut, LayoutDashboard, User, Code2, GraduationCap, Briefcase, Award, FolderGit2, Mail } from 'lucide-react';
 
 const menuItems = [
   { path: '/dashboard', name: 'Overview', icon: LayoutDashboard },
@@ -15,6 +16,7 @@ const menuItems = [
 ];
 
 export default function Sidebar() {
+  const router = useRouter();
   const pathname = usePathname();
   
   return (
@@ -41,10 +43,13 @@ export default function Sidebar() {
         })}
       </nav>
 
-      <div className="p-4 border-t border-gray-800 mt-auto">
+      <div className="p-4 border-t border-gray-800 mt-auto flex flex-col gap-2">
         <Link href="/" className="flex items-center justify-center gap-2 px-4 py-3 bg-gray-800/50 hover:bg-primary/20 hover:text-primary rounded-xl transition-colors text-sm text-foreground/80 font-medium">
           View Live Website
         </Link>
+        <button onClick={async () => { await signOut(auth); router.push('/'); }} className="flex items-center justify-center gap-2 px-4 py-3 bg-red-500/10 hover:bg-red-500/20 text-red-500 rounded-xl transition-colors text-sm font-medium w-full">
+          <LogOut size={16} /> Logout
+        </button>
       </div>
     </aside>
   );

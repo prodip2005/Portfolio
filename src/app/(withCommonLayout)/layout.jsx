@@ -2,6 +2,7 @@ import Banner from '@/components/Home/Banner';
 import Footer from '@/components/shared/Footer';
 import Navbar from '@/components/shared/Navbar';
 import React from 'react';
+import { FadeIn } from '@/components/shared/FadeIn';
 
 const Layout = ({ children }) => {
   return (
@@ -11,7 +12,7 @@ const Layout = ({ children }) => {
 
       {/* Banner সেকশন */}
       <div className="relative z-0">
-        <Banner />
+        <FadeIn delay={0.1} direction="none"><Banner /></FadeIn>
       </div>
 
       {/* Main Content: 

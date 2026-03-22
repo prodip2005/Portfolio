@@ -71,11 +71,7 @@ const ContactPage = () => {
               Social & Professional
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {isLoading ? (
-                <div className="col-span-full py-4 text-center text-foreground/50">
-                  Loading contacts...
-                </div>
-              ) : socialLinks.length > 0 ? (
+              {isLoading ? null : socialLinks.length > 0 ? (
                 socialLinks.map((link, index) => (
                   <ContactItem key={index} {...link} />
                 ))

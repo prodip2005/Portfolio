@@ -14,8 +14,8 @@ const Projects = () => {
         const data = await response.json();
 
         if (data && data.length > 0) {
-          // Show only latest 3 projects
-          setProjectsData(data.slice(0, 3));
+          // Show only latest 2 projects
+          setProjectsData(data.slice(0, 2));
         } else {
           setProjectsData([]);
         }
@@ -55,11 +55,7 @@ const Projects = () => {
         </Link>
       </div>
 
-      {isLoading ? (
-        <div className="text-center py-10 text-gray-500">
-          Loading projects...
-        </div>
-      ) : (
+      {isLoading ? null : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
           {projectsData.map((project, index) => (
             <div

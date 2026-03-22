@@ -23,13 +23,7 @@ const Intro = () => {
     fetchMainInfo();
   }, []);
 
-  if (isLoading) {
-    return (
-      <section className="bg-card/90 backdrop-blur-md p-8 rounded-3xl border border-gray-800 shadow-2xl transition-colors duration-300 min-h-[350px] flex items-center justify-center">
-        <span className="text-foreground/50">Loading intro...</span>
-      </section>
-    );
-  }
+  if (isLoading) { return null; }
 
   // Helper arrays for dynamic titles based on user preferences in future
   const defaultTitles = ["MERN Stack Developer", "Competitive Programmer", "ML Enthusiast"];

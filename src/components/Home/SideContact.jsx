@@ -65,7 +65,7 @@ const SideContact = () => {
             Email Me
           </p>
           <p className="text-[13px] text-foreground/80 font-medium group-hover/email:text-primary transition-colors">
-            contact@prodiphore.id
+            prodiphore2005@gmail.com
           </p>
         </div>
       </a>
@@ -75,11 +75,7 @@ const SideContact = () => {
           Social Connect
         </p>
 
-        {isLoading ? (
-            <div className="flex justify-center items-center py-4">
-              <span className="text-sm text-foreground/50">Loading forms...</span>
-            </div>
-        ) : (
+        {isLoading ? null : (
           <div className="grid gap-2">
             {socialLinks.map((social, index) => (
               <a

@@ -1,5 +1,6 @@
-"use client";
+'use client';
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 const Experience = () => {
   const [experiencesData, setExperiencesData] = useState([]);
@@ -12,7 +13,7 @@ const Experience = () => {
         const data = await response.json();
 
         if (data && data.length > 0) {
-          setExperiencesData(data);
+          setExperiencesData(data.slice(0, 2));
         } else {
           setExperiencesData([]);
         }
@@ -44,16 +45,15 @@ const Experience = () => {
             Where I&apos;ve applied my skills in real-world environments.
           </p>
         </div>
-        <button className="text-gray-400 hover:text-primary text-xs font-semibold transition-colors">
-          Full resume
-        </button>
+        <Link
+          href="/experience"
+          className="text-gray-400 hover:text-primary text-xs font-semibold transition-colors mt-2"
+        >
+          View full roadmap
+        </Link>
       </div>
 
-      {isLoading ? (
-        <div className="text-center py-10 text-gray-500">
-          Loading experiences...
-        </div>
-      ) : (
+      {isLoading ? null : (
         <div className="space-y-6">
           {experiencesData.map((exp, index) => (
             <div

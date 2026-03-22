@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
+import { GlobalLoader } from '@/components/shared/GlobalLoader';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -115,10 +116,35 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var savedTheme = localStorage.getItem('theme') || 'dark';
+                  var savedHue = localStorage.getItem('primary-hue') || '240';
+                  var root = document.documentElement;
+                  if (savedTheme === 'system') {
+                    root.classList.add(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                  } else {
+                    root.classList.add(savedTheme);
+                  }
+                  root.style.setProperty('--primary-hue', savedHue);
+                  root.style.setProperty('--primary-color', 'hsl(' + savedHue + ', 100%, 65%)');
+                  root.style.setProperty('--primary-border', 'hsla(' + savedHue + ', 100%, 65%, 0.2)');
+                  root.style.setProperty('--primary-shade', 'hsla(' + savedHue + ', 100%, 65%, 0.1)');
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col bg-background text-foreground transition-colors duration-300">
-        {children}
+        <GlobalLoader>{children}</GlobalLoader>
       </body>
     </html>
   );

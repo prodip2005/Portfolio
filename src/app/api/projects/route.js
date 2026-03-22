@@ -21,13 +21,16 @@ export async function POST(req) {
         const db = client.db("portfolio_db");
         const body = await req.json();
 
+        // Add automatic creation date
         if (Array.isArray(body)) {
+            const mappedBody = body.map(item => ({ ...item, createdAt: new Date() }));
             await db.collection("projects").deleteMany({});
-            const result = await db.collection("projects").insertMany(body);
+            const result = await db.collection("projects").insertMany(mappedBody);
             return NextResponse.json({ success: true, result });
         }
 
-        const result = await db.collection("projects").insertOne(body);
+        const newEntry = { ...body, createdAt: new Date() };
+        const result = await db.collection("projects").insertOne(newEntry);
         return NextResponse.json({ success: true, result });
     } catch (e) {
         console.error("POST Projects API Error:", e);

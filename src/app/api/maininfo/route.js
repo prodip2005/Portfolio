@@ -30,6 +30,7 @@ export async function POST(req) {
                     description: body.description,
                     resume: body.resume,
                     roadmap: body.roadmap,
+                    gmail: body.gmail || "prodiphore2005@gmail.com",
                     updatedAt: new Date()
                 }
             },

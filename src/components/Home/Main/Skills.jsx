@@ -79,11 +79,7 @@ const Skills = () => {
           </p>
         </div>
 
-        {isLoading ? (
-          <div className="py-8 text-center text-foreground/50">
-             Loading skills...
-          </div>
-        ) : (
+        {isLoading ? null : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {skillData.map((category) => (
               <SkillCategory

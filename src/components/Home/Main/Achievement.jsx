@@ -1,5 +1,6 @@
-"use client";
+'use client';
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 const Achievement = () => {
   const [achievementsData, setAchievementsData] = useState([]);
@@ -12,7 +13,7 @@ const Achievement = () => {
         const data = await response.json();
 
         if (data && data.length > 0) {
-          setAchievementsData(data);
+          setAchievementsData(data.slice(0, 3));
         } else {
           setAchievementsData([]);
         }
@@ -45,16 +46,15 @@ const Achievement = () => {
             full archive.
           </p>
         </div>
-        <button className="text-gray-400 hover:text-primary text-xs font-semibold transition-colors">
+        <Link
+          href="/achievements"
+          className="text-gray-400 hover:text-primary text-xs font-semibold transition-colors"
+        >
           View all achievements
-        </button>
+        </Link>
       </div>
 
-      {isLoading ? (
-        <div className="text-center py-10 text-gray-500">
-          Loading achievements...
-        </div>
-      ) : (
+      {isLoading ? null : (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
           {achievementsData.map((item, index) => (
             <div

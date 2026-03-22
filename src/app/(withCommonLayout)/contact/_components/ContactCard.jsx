@@ -9,13 +9,14 @@ import {
   MessageSquare,
   ExternalLink,
 } from 'lucide-react';
+import { FaDiscord } from 'react-icons/fa';
 
 const IconMap = {
   mail: Mail,
   github: Github,
   twitter: Twitter,
   linkedin: Linkedin,
-  discord: MessageSquare,
+  discord: FaDiscord,
 };
 
 const ContactItem = ({ iconName, label, value, subValue, href, isPrimary }) => {

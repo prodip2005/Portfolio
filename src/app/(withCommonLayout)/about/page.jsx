@@ -1,14 +1,15 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { Github, Linkedin, ExternalLink, Globe, Twitter, Facebook, MessageSquare } from 'lucide-react';
+import { Github, Linkedin, ExternalLink, Globe, Twitter, Facebook } from 'lucide-react';
 import Link from 'next/link';
+import { FaDiscord } from 'react-icons/fa';
 
 const iconMap = {
   github: <Github size={18} />,
   linkedin: <Linkedin size={18} />,
   twitter: <Twitter size={18} />,
   facebook: <Facebook size={18} />,
-  discord: <MessageSquare size={18} />
+  discord: <FaDiscord size={18} />
 };
 
 const getIcon = (name) => {
@@ -58,13 +59,7 @@ const AboutPage = () => {
     fetchAllData();
   }, []);
 
-  if (isLoading) {
-    return (
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 relative z-10 -mt-20 lg:-mt-24 min-h-[50vh] flex items-center justify-center">
-        <span className="text-foreground/50">Loading about information...</span>
-      </div>
-    );
-  }
+  if (isLoading) { return null; }
 
   const { mainInfo, education, skills, experience, socials } = data;
 
@@ -78,7 +73,7 @@ const AboutPage = () => {
             About Me
           </span>
           <h1 className="text-4xl font-bold text-foreground mt-4 mb-6">
-            {mainInfo?.name || "Loading..."}
+            {mainInfo?.name || ""}
           </h1>
           <div className="space-y-4 text-gray-400 leading-relaxed text-base whitespace-pre-line">
             {mainInfo?.description ? (

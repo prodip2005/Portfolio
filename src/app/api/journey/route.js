@@ -7,7 +7,7 @@ export async function GET() {
         const db = client.db("portfolio_db");
 
         // "journey" কালেকশন থেকে ডাটা রিড করবে
-        const journey = await db.collection("journey").find({}).toArray();
+        const journey = await db.collection("journey").find({}).sort({ _id: -1 }).toArray();
 
         return NextResponse.json(journey.length > 0 ? journey : []);
     } catch (e) {
@@ -25,12 +25,14 @@ export async function POST(req) {
         // যদি ডাটা array হয় (একাধিক Journey একসাথে ইনসার্ট করতে চাইলে)
         if (Array.isArray(body)) {
             await db.collection("journey").deleteMany({}); // আগের ডাটা ক্লিয়ার
-            const result = await db.collection("journey").insertMany(body); // নতুন ডাটা ইনসার্ট
+            const mappedBody = body.map(item => ({ ...item, createdAt: new Date() }));
+            const result = await db.collection("journey").insertMany(mappedBody); // নতুন ডাটা ইনসার্ট
             return NextResponse.json({ success: true, result });
         }
 
         // যদি সিঙ্গেল অবজেক্ট পাঠায়
-        const result = await db.collection("journey").insertOne(body);
+        const newEntry = { ...body, createdAt: new Date() };
+        const result = await db.collection("journey").insertOne(newEntry);
 
         return NextResponse.json({ success: true, result });
     } catch (e) {

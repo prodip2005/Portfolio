@@ -1,6 +1,28 @@
-import React from 'react';
+'use client';
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 const Collaboration = () => {
+  const [githubLink, setGithubLink] = useState('https://github.com/prodip2005');
+
+  useEffect(() => {
+    const fetchContacts = async () => {
+      try {
+        const response = await fetch('/api/contact');
+        if (response.ok) {
+          const data = await response.json();
+          const gh = data.find(item => item.name.toLowerCase().includes('github'));
+          if (gh && gh.link) {
+            setGithubLink(gh.link);
+          }
+        }
+      } catch (error) {
+        console.error("Failed to fetch contact links:", error);
+      }
+    };
+    fetchContacts();
+  }, []);
+
   return (
     <div className="mt-8 space-y-8">
       <section className="bg-card/90 backdrop-blur-md p-8 rounded-3xl border border-gray-800 shadow-2xl flex flex-col md:flex-row justify-between items-center gap-6 transition-all duration-300">
@@ -17,15 +39,14 @@ const Collaboration = () => {
         </div>
 
         <div className="flex items-center gap-3">
-          <button className="bg-primary/10 hover:bg-primary/20 text-primary px-6 py-2 rounded-xl text-sm font-bold border border-primary/20 transition-all">
+          <Link href="/contact" className="bg-primary/10 hover:bg-primary/20 text-primary px-6 py-2 rounded-xl text-sm font-bold border border-primary/20 transition-transform hover:-translate-y-0.5 inline-block text-center flex items-center justify-center">
             Contact
-          </button>
-          <button className="bg-gray-800/50 hover:bg-gray-700 text-gray-300 px-6 py-2 rounded-xl text-sm font-bold border border-gray-700 transition-all">
+          </Link>
+          <a href={githubLink} target="_blank" rel="noopener noreferrer" className="bg-gray-800/50 hover:bg-gray-700 text-gray-300 px-6 py-2 rounded-xl text-sm font-bold border border-gray-700 transition-transform hover:-translate-y-0.5 inline-block text-center flex items-center justify-center">
             GitHub
-          </button>
+          </a>
         </div>
       </section>
-
     </div>
   );
 };

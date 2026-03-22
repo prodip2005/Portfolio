@@ -7,7 +7,7 @@ export async function GET() {
         const db = client.db("portfolio_db");
 
         // "achievements" কালেকশন থেকে ডাটা রিড করবে
-        const achievements = await db.collection("achievements").find({}).toArray();
+        const achievements = await db.collection("achievements").find({}).sort({ _id: -1 }).toArray();
 
         return NextResponse.json(achievements.length > 0 ? achievements : []);
     } catch (e) {
@@ -25,12 +25,14 @@ export async function POST(req) {
         // যদি ডাটা array হয় (একাধিক achievement একসাথে ইনসার্ট করতে চাইলে)
         if (Array.isArray(body)) {
             await db.collection("achievements").deleteMany({}); // আগের ডাটা ক্লিয়ার
-            const result = await db.collection("achievements").insertMany(body); // নতুন ডাটা ইনসার্ট
+            const mappedBody = body.map(item => ({ ...item, createdAt: new Date() }));
+            const result = await db.collection("achievements").insertMany(mappedBody); // নতুন ডাটা ইনসার্ট
             return NextResponse.json({ success: true, result });
         }
 
         // যদি সিঙ্গেল অবজেক্ট পাঠায়
-        const result = await db.collection("achievements").insertOne(body);
+        const newEntry = { ...body, createdAt: new Date() };
+        const result = await db.collection("achievements").insertOne(newEntry);
 
         return NextResponse.json({ success: true, result });
     } catch (e) {
