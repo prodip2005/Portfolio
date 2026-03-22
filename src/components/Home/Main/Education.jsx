@@ -72,7 +72,7 @@ const Education = () => {
                   {item.institution}
                 </div>
                 <div className="text-gray-500 text-xs mt-1 italic">
-                  Major: {item.major}
+                  {item.major}
                 </div>
               </div>
             </div>
