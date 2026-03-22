@@ -1,5 +1,7 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import PageLoader from "@/components/shared/PageLoader";
+import React from 'react';
+import { useSharedData } from '@/hooks/useSharedData';
 import { FiExternalLink, FiMail } from 'react-icons/fi';
 import { FaGithub, FaLinkedin, FaDiscord, FaGlobe, FaTwitter, FaFacebook } from 'react-icons/fa';
 
@@ -22,25 +24,11 @@ const getIcon = (name) => {
 };
 
 const SideContact = () => {
-  const [socialLinks, setSocialLinks] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchContacts = async () => {
-      try {
-        const response = await fetch('/api/contact');
-        if (response.ok) {
-          const data = await response.json();
-          setSocialLinks(data);
-        }
-      } catch (error) {
-        console.error("Failed to fetch contact links:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchContacts();
-  }, []);
+  const { data: socialLinksData, isLoading } = useSharedData('socialLinks', async () => {
+    const res = await fetch('/api/contact');
+    return await res.json();
+  });
+  const socialLinks = socialLinksData || [];
 
 
 
@@ -75,7 +63,7 @@ const SideContact = () => {
           Social Connect
         </p>
 
-        {isLoading ? null : (
+        {isLoading ? (<div className='flex justify-center items-center py-10 w-full'><PageLoader /></div>) : (
           <div className="grid gap-2">
             {socialLinks.map((social, index) => (
               <a

@@ -1,5 +1,7 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import PageLoader from '@/components/shared/PageLoader';
+import { useSharedData } from '@/hooks/useSharedData';
 import { Github, Linkedin, ExternalLink, Globe, Twitter, Facebook } from 'lucide-react';
 import Link from 'next/link';
 import { FaDiscord } from 'react-icons/fa';
@@ -22,46 +24,29 @@ const getIcon = (name) => {
   return <Globe size={18} />;
 };
 
+const fetchAboutData = async () => {
+  const [mainRes, eduRes, skillRes, expRes, contactRes] = await Promise.all([
+    fetch('/api/maininfo'),
+    fetch('/api/education'),
+    fetch('/api/skills'),
+    fetch('/api/journey'),
+    fetch('/api/contact')
+  ]);
+  return {
+    mainInfo: mainRes.ok ? await mainRes.json() : null,
+    education: eduRes.ok ? await eduRes.json() : [],
+    skills: skillRes.ok ? await skillRes.json() : [],
+    experience: expRes.ok ? await expRes.json() : [],
+    socials: contactRes.ok ? await contactRes.json() : []
+  };
+};
+
 const AboutPage = () => {
-  const [data, setData] = useState({
-    mainInfo: null,
-    education: [],
-    skills: [],
-    experience: [],
-    socials: []
-  });
-  const [isLoading, setIsLoading] = useState(true);
+  const { data, isLoading } = useSharedData('aboutPage', fetchAboutData);
 
-  useEffect(() => {
-    const fetchAllData = async () => {
-      try {
-        const [mainRes, eduRes, skillRes, expRes, contactRes] = await Promise.all([
-          fetch('/api/maininfo'),
-          fetch('/api/education'),
-          fetch('/api/skills'),
-          fetch('/api/journey'),
-          fetch('/api/contact')
-        ]);
+  
 
-        setData({
-          mainInfo: mainRes.ok ? await mainRes.json() : null,
-          education: eduRes.ok ? await eduRes.json() : [],
-          skills: skillRes.ok ? await skillRes.json() : [],
-          experience: expRes.ok ? await expRes.json() : [],
-          socials: contactRes.ok ? await contactRes.json() : []
-        });
-      } catch (error) {
-        console.error("Failed to fetch about data:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchAllData();
-  }, []);
-
-  if (isLoading) { return null; }
-
-  const { mainInfo, education, skills, experience, socials } = data;
+  const { mainInfo, education, skills, experience, socials } = data || {};
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 relative z-10 -mt-20 lg:-mt-24">

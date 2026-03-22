@@ -1,36 +1,24 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import PageLoader from '@/components/shared/PageLoader';
+import { useSharedData } from '@/hooks/useSharedData';
 import { Clock } from 'lucide-react';
 import { ContactCard, ContactItem } from './_components/ContactCard';
 
 const ContactPage = () => {
-  const [socialLinks, setSocialLinks] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchContacts = async () => {
-      try {
-        const response = await fetch('/api/contact');
-        if (response.ok) {
-          const data = await response.json();
-          // Map to match the ContactItem component props
-          const formattedLinks = data.map(item => ({
-            iconName: item.name.toLowerCase().trim(),
-            label: item.name,
-            value: item.username,
-            subValue: 'Let\'s connect', // Default placeholder subValue
-            href: item.link,
-          }));
-          setSocialLinks(formattedLinks);
-        }
-      } catch (error) {
-        console.error("Failed to fetch contact links:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchContacts();
-  }, []);
+  const { data: links, isLoading } = useSharedData('socialLinks', async () => {
+    const res = await fetch('/api/contact');
+    if (!res.ok) return [];
+    return await res.json();
+  });
+  
+  const socialLinks = links ? links.map((item) => ({
+    iconName: item.name.toLowerCase().trim(),
+    label: item.name,
+    value: item.username,
+    subValue: "Let's connect",
+    href: item.link,
+  })) : [];
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 relative z-10 -mt-20 lg:-mt-24">
@@ -71,7 +59,7 @@ const ContactPage = () => {
               Social & Professional
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {isLoading ? null : socialLinks.length > 0 ? (
+              {isLoading ? (<div className='flex justify-center items-center py-10 w-full'><PageLoader /></div>) : socialLinks.length > 0 ? (
                 socialLinks.map((link, index) => (
                   <ContactItem key={index} {...link} />
                 ))

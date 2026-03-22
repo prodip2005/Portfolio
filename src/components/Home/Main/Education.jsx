@@ -1,47 +1,15 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import PageLoader from "@/components/shared/PageLoader";
+import React from 'react';
+import { useSharedData } from '@/hooks/useSharedData';
 
 const Education = () => {
-  const [educationData, setEducationData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchEducation = async () => {
-      try {
-        const response = await fetch('/api/education');
-        const data = await response.json();
-
-        if (data && data.length > 0) {
-          setEducationData(data);
-        } else {
-          // Fallback static data if DB is empty
-          setEducationData([
-            {
-              degree: 'B.Sc. in Computer Science & Engineering (CSE)',
-              status: 'Ongoing',
-              institution:
-                'Patuakhali Science and Technology University (PSTU)',
-              period: '2024 - Present',
-              major: 'Computer Science',
-            },
-            {
-              degree: 'Higher Secondary Certificate (HSC)',
-              status: 'Graduated',
-              institution: 'Kalaroa Govt College',
-              period: '2021 - 2023',
-              major: 'Science',
-            },
-          ]);
-        }
-      } catch (error) {
-        console.error('Failed to fetch education:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchEducation();
-  }, []);
+    const { data: fulleducation, isLoading } = useSharedData('educationData', async () => {
+    const res = await fetch('/api/education');
+    return await res.json();
+  });
+  
+  const educationData = fulleducation ? fulleducation : [];
 
   return (
     <section className="bg-card/90 backdrop-blur-md p-8 rounded-3xl border border-gray-800 shadow-2xl mt-8 transition-all duration-300">
@@ -57,7 +25,7 @@ const Education = () => {
         </p>
       </div>
 
-      {isLoading ? null : (
+      {isLoading ? (<div className='flex justify-center items-center py-10 w-full'><PageLoader /></div>) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {educationData.map((edu, index) => (
             <div

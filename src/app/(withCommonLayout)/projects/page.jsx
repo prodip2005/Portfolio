@@ -1,6 +1,8 @@
 'use client';
+import PageLoader from "@/components/shared/PageLoader";
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSharedData } from '@/hooks/useSharedData';
 import {
   ExternalLink,
   Github,
@@ -165,7 +167,7 @@ const AllProjects = () => {
           </h2>
         </div>
 
-        {isLoading ? null : (
+        {isLoading ? <PageLoader /> : (
             <>
                 {/* Projects Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

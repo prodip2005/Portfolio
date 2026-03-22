@@ -1,29 +1,15 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import PageLoader from '@/components/shared/PageLoader';
+import { useSharedData } from '@/hooks/useSharedData';
 import { Briefcase, Calendar, ChevronRight } from 'lucide-react';
 
 const ExperiencePage = () => {
-  const [experiences, setExperiences] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchExperiences = async () => {
-      try {
-        const response = await fetch('/api/journey');
-        const data = await response.json();
-        if (data && data.length > 0) {
-          setExperiences(data);
-        } else {
-          setExperiences([]);
-        }
-      } catch (error) {
-        console.error('Failed to fetch experiences:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchExperiences();
-  }, []);
+  const { data: experiencesData, isLoading } = useSharedData('experienceData', async () => {
+    const res = await fetch('/api/journey');
+    return await res.json();
+  });
+  const experiences = experiencesData || [];
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 relative z-10 -mt-20 lg:-mt-24">
@@ -41,11 +27,7 @@ const ExperiencePage = () => {
           </p>
         </div>
 
-        {isLoading ? (
-          <div className="flex justify-center items-center py-32">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-          </div>
-        ) : experiences.length === 0 ? (
+        {isLoading ? <PageLoader /> : experiences.length === 0 ? (
           <div className="text-center py-20 text-gray-500 bg-background/30 rounded-2xl border border-dashed border-gray-800">
             No experiences recorded yet.
           </div>

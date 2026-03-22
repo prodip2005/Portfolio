@@ -1,6 +1,8 @@
 "use client";
+import PageLoader from "@/components/shared/PageLoader";
 import Image from 'next/image';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSharedData } from '@/hooks/useSharedData';
 import { FaGithub, FaTwitter, FaInstagram, FaLinkedin, FaFacebook, FaDiscord, FaGlobe } from 'react-icons/fa';
 
 const iconMap = {
@@ -50,7 +52,7 @@ const SideProfile = () => {
     fetchData();
   }, []);
 
-  if (isLoading) { return null; }
+  if (isLoading) { return <div className="flex justify-center items-center py-10 w-full bg-card/90 backdrop-blur-md rounded-3xl border border-gray-800 shadow-lg min-h-[400px]"><PageLoader /></div>; }
 
   const { mainInfo, socials } = data;
 

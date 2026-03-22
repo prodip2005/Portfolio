@@ -1,31 +1,16 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import PageLoader from "@/components/shared/PageLoader";
+import React from 'react';
+import { useSharedData } from '@/hooks/useSharedData';
 import Link from 'next/link';
 
 const Achievement = () => {
-  const [achievementsData, setAchievementsData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchAchievements = async () => {
-      try {
-        const response = await fetch('/api/achievements');
-        const data = await response.json();
-
-        if (data && data.length > 0) {
-          setAchievementsData(data.slice(0, 3));
-        } else {
-          setAchievementsData([]);
-        }
-      } catch (error) {
-        console.error('Failed to fetch achievements:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchAchievements();
-  }, []);
+    const { data: fullachievements, isLoading } = useSharedData('achievementData', async () => {
+    const res = await fetch('/api/achievements');
+    return await res.json();
+  });
+  
+  const achievementsData = fullachievements ? fullachievements.slice(0, 3) : [];
 
   if (!isLoading && achievementsData.length === 0) {
     return null;
@@ -54,7 +39,7 @@ const Achievement = () => {
         </Link>
       </div>
 
-      {isLoading ? null : (
+      {isLoading ? (<div className='flex justify-center items-center py-10 w-full'><PageLoader /></div>) : (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
           {achievementsData.map((item, index) => (
             <div

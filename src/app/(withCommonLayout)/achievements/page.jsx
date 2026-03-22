@@ -1,6 +1,10 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import PageLoader from '@/components/shared/PageLoader';
+import { useSharedData } from '@/hooks/useSharedData';
 import { ChevronLeft, ChevronRight, Trophy, Medal, Star, Shield } from 'lucide-react';
+
+const itemsPerPage = 6;
 
 const AchievementCard = ({ item }) => (
   <div className="bg-background/40 backdrop-blur-sm border border-gray-800 p-6 rounded-2xl hover:border-primary/40 hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 group flex flex-col h-full">
@@ -45,43 +49,11 @@ const AchievementCard = ({ item }) => (
 
 const AllAchievements = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [achievements, setAchievements] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const itemsPerPage = 6;
-
-  useEffect(() => {
-    const fetchAchievements = async () => {
-      try {
-        const response = await fetch('/api/achievements');
-        const data = await response.json();
-        if (data && data.length > 0) {
-          setAchievements(data);
-        } else {
-          setAchievements([
-            {
-              title: "NCPC 2023 - Jahangirnagar University",
-              type: "Programming Contest",
-              date: "Mar 2024",
-              rank: "45th",
-              result: "Honorable Mention"
-            },
-            {
-              title: "IUPC 2023 - Dhaka University",
-              type: "Programming Contest",
-              date: "Dec 2023",
-              rank: "12th",
-              result: "Top 15 Finalist"
-            }
-          ]);
-        }
-      } catch (error) {
-        console.error('Failed to fetch achievements:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchAchievements();
-  }, []);
+  const { data: achievementsData, isLoading } = useSharedData('achievementData', async () => {
+    const res = await fetch('/api/achievements');
+    return await res.json();
+  });
+  const achievements = achievementsData || [];
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -111,11 +83,7 @@ const AllAchievements = () => {
           </p>
         </div>
 
-        {isLoading ? (
-          <div className="flex justify-center items-center py-32">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-          </div>
-        ) : (
+        {isLoading ? <PageLoader /> : (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {currentItems.map((item, i) => (

@@ -1,6 +1,8 @@
 "use client";
+import PageLoader from "@/components/shared/PageLoader";
 import Link from 'next/link';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSharedData } from '@/hooks/useSharedData';
 
 const Intro = () => {
   const [mainInfo, setMainInfo] = useState(null);
@@ -23,7 +25,7 @@ const Intro = () => {
     fetchMainInfo();
   }, []);
 
-  if (isLoading) { return null; }
+  if (isLoading) { return <div className="flex justify-center items-center py-10 w-full bg-card/90 backdrop-blur-md rounded-3xl border border-gray-800 shadow-lg min-h-[400px]"><PageLoader /></div>; }
 
   // Helper arrays for dynamic titles based on user preferences in future
   const defaultTitles = ["MERN Stack Developer", "Competitive Programmer", "ML Enthusiast"];

@@ -1,31 +1,16 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import PageLoader from "@/components/shared/PageLoader";
+import React from 'react';
+import { useSharedData } from '@/hooks/useSharedData';
 import Link from 'next/link';
 
 const Experience = () => {
-  const [experiencesData, setExperiencesData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchExperiences = async () => {
-      try {
-        const response = await fetch('/api/journey');
-        const data = await response.json();
-
-        if (data && data.length > 0) {
-          setExperiencesData(data.slice(0, 2));
-        } else {
-          setExperiencesData([]);
-        }
-      } catch (error) {
-        console.error('Failed to fetch experiences:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchExperiences();
-  }, []);
+    const { data: fullexperiences, isLoading } = useSharedData('experienceData', async () => {
+    const res = await fetch('/api/journey');
+    return await res.json();
+  });
+  
+  const experiencesData = fullexperiences ? fullexperiences.slice(0, 2) : [];
 
   if (!isLoading && experiencesData.length === 0) {
     return null;
@@ -53,7 +38,7 @@ const Experience = () => {
         </Link>
       </div>
 
-      {isLoading ? null : (
+      {isLoading ? (<div className='flex justify-center items-center py-10 w-full'><PageLoader /></div>) : (
         <div className="space-y-6">
           {experiencesData.map((exp, index) => (
             <div

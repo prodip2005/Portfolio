@@ -1,5 +1,7 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import PageLoader from "@/components/shared/PageLoader";
+import React from 'react';
+import { useSharedData } from '@/hooks/useSharedData';
 import { Code2, Database, Layout, BrainCircuit, Wrench, Globe } from 'lucide-react';
 
 const getIconForCategory = (title) => {
@@ -40,25 +42,12 @@ const SkillCategory = ({ title, skills }) => {
 };
 
 const Skills = () => {
-  const [skillData, setSkillData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchSkills = async () => {
-      try {
-        const response = await fetch('/api/skills');
-        if (response.ok) {
-          const data = await response.json();
-          setSkillData(data);
-        }
-      } catch (error) {
-        console.error("Failed to fetch skills:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchSkills();
-  }, []);
+    const { data: fullskill, isLoading } = useSharedData('skillsData', async () => {
+    const res = await fetch('/api/skills');
+    return await res.json();
+  });
+  
+  const skillData = fullskill ? fullskill : [];
 
   if (!isLoading && skillData.length === 0) {
     return null;
@@ -79,7 +68,7 @@ const Skills = () => {
           </p>
         </div>
 
-        {isLoading ? null : (
+        {isLoading ? (<div className='flex justify-center items-center py-10 w-full'><PageLoader /></div>) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {skillData.map((category) => (
               <SkillCategory
